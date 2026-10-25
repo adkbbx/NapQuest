@@ -1,0 +1,9 @@
+.venv/
+.cache/
+__pycache__/
+evidence/*.log
+evidence/*.jsonl
+submission/.tools/
+submission/frames/
+submission/*.zip
+submission/release-manifest.json

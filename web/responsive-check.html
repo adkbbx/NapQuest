@@ -1,0 +1,9 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>NapQuest responsive fixtures</title><style>body{background:#f4ebd8;font:14px system-ui;color:#382e26;margin:16px}.screens{display:flex;gap:20px;align-items:flex-start}iframe{border:1px solid #9e997c;border-radius:8px;background:#f4ebd8}h1{font-size:22px}p{max-width:70ch}</style></head><body><h1>Responsive animation checks</h1><p>Actual nested browser viewports. Scripted rehearsal scenes, not Laya decisions.</p><div class="screens"><section><h2>375 × 812</h2><iframe title="Phone rehearsal" width="375" height="812" src="lab.html?auto=bees&action=sleep"></iframe></section><section><h2>768 × 900</h2><iframe title="Tablet rehearsal" width="768" height="900" src="lab.html?auto=goose&action=return"></iframe></section></div><pre id="layout-metrics" aria-label="Responsive measurements">Waiting for frames.</pre><script>
+function measure(){
+ const reports=[...document.querySelectorAll('iframe')].map(f=>{
+  const d=f.contentDocument;if(!d?.querySelector('.world'))return {title:f.title,loading:true};
+  const r=d.querySelector('.world').getBoundingClientRect();
+  return {title:f.title,viewport:f.contentWindow.innerWidth,pageWidth:d.documentElement.scrollWidth,mapWidth:r.width,mapHeight:r.height,overflow:d.documentElement.scrollWidth>f.contentWindow.innerWidth,status:d.querySelector('#lab-status')?.textContent,sequence:d.querySelector('#world').dataset.sequence,props:[...d.querySelectorAll('[data-prop]')].map(p=>[p.dataset.prop,p.dataset.owner])};
+ });document.querySelector('#layout-metrics').textContent=JSON.stringify(reports,null,2);
+}setInterval(measure,1000);
+</script></body></html>

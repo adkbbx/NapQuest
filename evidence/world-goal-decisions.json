@@ -1,0 +1,373 @@
+[
+  {
+    "goal": "Spend all my coins buying things.",
+    "project": {
+      "kind": "spend",
+      "goal": "Spend all my coins buying things.",
+      "meaning": {
+        "choice": "spend",
+        "probabilities": {
+          "explore": 0,
+          "spend": 1,
+          "earn": 0,
+          "upgrade": 0,
+          "rest": 0,
+          "build": 0,
+          "recruit": 0,
+          "gather": 0,
+          "shop": 0,
+          "craft": 0,
+          "maintain": 0,
+          "other": 0
+        },
+        "elapsed_ms": 1771,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "schema": 4
+    },
+    "inventory": {
+      "wood": 0,
+      "stone": 0,
+      "fiber": 0,
+      "berries": 0,
+      "food": 1,
+      "honey": 0,
+      "seeds": 1,
+      "muffler": 0,
+      "picnic": 0,
+      "coins": 3
+    },
+    "energy": 100,
+    "level": 1,
+    "options": [
+      {
+        "id": "buy_lunch",
+        "intent": "Spend 2 coins buying 2 food at the market. Funds become 1 coins. Food provides 50 total energy when eaten."
+      },
+      {
+        "id": "buy_berry",
+        "intent": "Spend 1 coin buying 1 berry at the market. Funds become 2 coins. Eat it for 25 energy."
+      }
+    ],
+    "answer": {
+      "choice": "buy_berry",
+      "probabilities": {
+        "buy_lunch": 0.3596,
+        "buy_berry": 0.6404
+      },
+      "elapsed_ms": 1296,
+      "model": "convaiinnovations/laya",
+      "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+    }
+  },
+  {
+    "goal": "Spend all my coins buying things.",
+    "project": {
+      "kind": "spend",
+      "goal": "Spend all my coins buying things.",
+      "meaning": {
+        "choice": "spend",
+        "probabilities": {
+          "explore": 0,
+          "spend": 1,
+          "earn": 0,
+          "upgrade": 0,
+          "rest": 0,
+          "build": 0,
+          "recruit": 0,
+          "gather": 0,
+          "shop": 0,
+          "craft": 0,
+          "maintain": 0,
+          "other": 0
+        },
+        "elapsed_ms": 1771,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "schema": 4
+    },
+    "inventory": {
+      "wood": 0,
+      "stone": 0,
+      "fiber": 0,
+      "berries": 1,
+      "food": 1,
+      "honey": 0,
+      "seeds": 1,
+      "muffler": 0,
+      "picnic": 0,
+      "coins": 2
+    },
+    "energy": 100,
+    "level": 1,
+    "options": [
+      {
+        "id": "buy_lunch",
+        "intent": "Spend 2 coins buying 2 food at the market. Funds become 0 coins. Food provides 50 total energy when eaten."
+      },
+      {
+        "id": "buy_berry",
+        "intent": "Spend 1 coin buying 1 berry at the market. Funds become 1 coins. Eat it for 25 energy."
+      }
+    ],
+    "answer": {
+      "choice": "buy_berry",
+      "probabilities": {
+        "buy_lunch": 0.3472,
+        "buy_berry": 0.6528
+      },
+      "elapsed_ms": 1175,
+      "model": "convaiinnovations/laya",
+      "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+    }
+  },
+  {
+    "goal": "Spend all my coins buying things.",
+    "project": {
+      "kind": "spend",
+      "goal": "Spend all my coins buying things.",
+      "meaning": {
+        "choice": "spend",
+        "probabilities": {
+          "explore": 0,
+          "spend": 1,
+          "earn": 0,
+          "upgrade": 0,
+          "rest": 0,
+          "build": 0,
+          "recruit": 0,
+          "gather": 0,
+          "shop": 0,
+          "craft": 0,
+          "maintain": 0,
+          "other": 0
+        },
+        "elapsed_ms": 1771,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "schema": 4
+    },
+    "inventory": {
+      "wood": 0,
+      "stone": 0,
+      "fiber": 0,
+      "berries": 2,
+      "food": 1,
+      "honey": 0,
+      "seeds": 1,
+      "muffler": 0,
+      "picnic": 0,
+      "coins": 1
+    },
+    "energy": 100,
+    "level": 1,
+    "options": [
+      {
+        "id": "buy_berry",
+        "intent": "Spend 1 coin buying 1 berry at the market. Funds become 0 coins. Eat it for 25 energy."
+      }
+    ],
+    "answer": {
+      "choice": "buy_berry",
+      "probabilities": {
+        "buy_berry": 1
+      },
+      "elapsed_ms": 1024,
+      "model": "convaiinnovations/laya",
+      "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+    }
+  },
+  {
+    "goal": "Explore new places. Eat or buy food to keep going, and return home before energy runs out.",
+    "project": {
+      "kind": "explore",
+      "goal": "Explore new places. Eat or buy food to keep going, and return home before energy runs out.",
+      "meaning": {
+        "choice": "explore",
+        "probabilities": {
+          "explore": 0.9999,
+          "spend": 0,
+          "earn": 0,
+          "upgrade": 0,
+          "rest": 0,
+          "build": 0,
+          "recruit": 0,
+          "gather": 0,
+          "shop": 0,
+          "craft": 0,
+          "maintain": 0.0001,
+          "other": 0
+        },
+        "elapsed_ms": 1606,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "schema": 4
+    },
+    "inventory": {
+      "wood": 0,
+      "stone": 0,
+      "fiber": 0,
+      "berries": 0,
+      "food": 1,
+      "honey": 0,
+      "seeds": 1,
+      "muffler": 0,
+      "picnic": 0,
+      "coins": 3
+    },
+    "energy": 100,
+    "level": 1,
+    "options": [
+      {
+        "id": "explore",
+        "intent": "Explore 5 new woodland areas. Walk costs 8 energy. Reserve 14 energy for returning home. Discover places rather than ending the adventure."
+      }
+    ],
+    "answer": {
+      "choice": "explore",
+      "probabilities": {
+        "explore": 1
+      },
+      "elapsed_ms": 1145,
+      "model": "convaiinnovations/laya",
+      "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+    }
+  },
+  {
+    "goal": "Upgrade my home to level 5. Keep working until it reaches level 5.",
+    "project": {
+      "kind": "upgrade",
+      "goal": "Upgrade my home to level 5. Keep working until it reaches level 5.",
+      "meaning": {
+        "choice": "upgrade",
+        "probabilities": {
+          "explore": 0,
+          "spend": 0,
+          "earn": 0,
+          "upgrade": 1,
+          "rest": 0,
+          "build": 0,
+          "recruit": 0,
+          "gather": 0,
+          "shop": 0,
+          "craft": 0,
+          "maintain": 0,
+          "other": 0
+        },
+        "elapsed_ms": 1807,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "schema": 4,
+      "levelChoice": {
+        "choice": "level_5",
+        "probabilities": {
+          "level_1": 0.091,
+          "level_2": 0.0838,
+          "level_3": 0.0495,
+          "level_4": 0.0473,
+          "level_5": 0.7284
+        },
+        "elapsed_ms": 1333,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "targetLevel": 5
+    },
+    "inventory": {
+      "wood": 6,
+      "stone": 3,
+      "fiber": 0,
+      "berries": 0,
+      "food": 1,
+      "honey": 0,
+      "seeds": 1,
+      "muffler": 0,
+      "picnic": 0,
+      "coins": 3
+    },
+    "energy": 100,
+    "level": 1,
+    "options": [
+      {
+        "id": "upgrade_home",
+        "intent": "Upgrade your home from level 1 to 2. Uses 6 wood, 3 stone, 1 coins. Permanent progress toward level 5."
+      }
+    ],
+    "answer": {
+      "choice": "upgrade_home",
+      "probabilities": {
+        "upgrade_home": 1
+      },
+      "elapsed_ms": 1117,
+      "model": "convaiinnovations/laya",
+      "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+    }
+  },
+  {
+    "goal": "Explore new places, but refuel or go home before energy runs out.",
+    "project": {
+      "kind": "explore",
+      "goal": "Explore new places, but refuel or go home before energy runs out.",
+      "meaning": {
+        "choice": "explore",
+        "probabilities": {
+          "explore": 0.9997,
+          "spend": 0,
+          "earn": 0,
+          "upgrade": 0,
+          "rest": 0,
+          "build": 0,
+          "recruit": 0,
+          "gather": 0,
+          "shop": 0,
+          "craft": 0,
+          "maintain": 0.0001,
+          "other": 0.0001
+        },
+        "elapsed_ms": 1598,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "schema": 4
+    },
+    "inventory": {
+      "wood": 0,
+      "stone": 0,
+      "fiber": 0,
+      "berries": 0,
+      "food": 1,
+      "honey": 0,
+      "seeds": 1,
+      "muffler": 0,
+      "picnic": 0,
+      "coins": 3
+    },
+    "energy": 12,
+    "level": 1,
+    "options": [
+      {
+        "id": "eat",
+        "intent": "Eat carried food now to restore energy. Current energy 12/100. Food is already paid for."
+      },
+      {
+        "id": "home",
+        "intent": "Walk home and sleep to recharge to 100 energy. Return needs 3 energy; current energy 12. Does not spend coins or discover new places."
+      }
+    ],
+    "answer": {
+      "choice": "home",
+      "probabilities": {
+        "eat": 0.3329,
+        "home": 0.6671
+      },
+      "elapsed_ms": 1148,
+      "model": "convaiinnovations/laya",
+      "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+    }
+  }
+]

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="map" preserveAspectRatio="none" viewBox="0 0 960 600" aria-hidden="true">
+          <defs>
+            <pattern id="paper-grain" width="37" height="31" patternUnits="userSpaceOnUse"><circle cx="4" cy="7" r=".8" fill="#697945" opacity=".13"/><circle cx="21" cy="22" r="1" fill="#f5eed7" opacity=".35"/><path d="m30 5 3 1m-22 18 2 1" stroke="#6c8050" opacity=".16"/></pattern>
+            <g id="tree"><ellipse cx="0" cy="28" rx="44" ry="13" fill="#52633d" opacity=".14"/><path d="m-8 14 2 27 14-1-3-30" fill="#8a6547"/><path d="M-7 27 7 23M-3 12 2 37" stroke="#6e513b" stroke-width="2"/><path d="M-47 3c-14-16-9-35 8-42-10-24 11-43 30-36 15-18 38-10 43 9 26-1 40 25 25 43 13 24-5 43-27 39C10 33-14 28-23 15-35 19-48 13-47 3Z" fill="#65794e" stroke="#566a43" stroke-width="3"/><path d="M-42-20c5-16 17-17 27-12-5-20 16-31 28-25 13-7 30 4 28 16" fill="none" stroke="#82925e" stroke-width="10" stroke-linecap="round"/><path d="M-30 4c17 9 29-1 32-10m12 16c15 2 28-6 30-16" fill="none" stroke="#566a43" stroke-width="3" stroke-linecap="round"/></g>
+            <g id="fern" fill="none" stroke="#5d784e" stroke-width="4" stroke-linecap="round"><path d="M0 16Q3-15 12-27M0 16Q-13-12-27-14M0 16Q17-6 29-8"/><path d="m7-11-9-6m12-2 10-1M-11-4l-11 2m17 5-3-11M13 4l11 3m-4-11 2-8" stroke-width="6"/></g>
+            <g id="flower"><path d="m0 0 1 11m0-5 5-3" stroke="#7e8c57" stroke-width="2"/><path d="M0 0c-8-7 1-11 3-4 5-7 11 1 3 3 6 7-3 11-5 4-6 5-11-3-1-3" fill="#eee6be"/><circle cx="2" cy="0" r="2.5" fill="#d1a54c"/></g>
+            <g id="rock"><path d="m-20 9 5-19 17-9L22-6 25 11 8 17Z" fill="#a3ac93"/><path d="m-15-10 18-9 9 15-9 6Z" fill="#bdc2a8"/><path d="m3 2 22 9-17 6" fill="#8d9c86"/></g>
+            <g id="mushroom"><path d="m-3 0 1 12 7 0-2-13" fill="#eee4c4"/><path d="M-13 1c1-23 29-21 29 0-8 4-19 5-29 0" fill="#b87550" stroke="#986142" stroke-width="2"/><circle cx="-4" cy="-7" r="3" fill="#eee4c4"/><circle cx="7" cy="-8" r="2" fill="#eee4c4"/></g>
+          </defs>
+          <path fill="#b8c39a" d="M0 0h960v600H0Z"/>
+          <path d="M0 146Q124 97 236 154T479 145 754 136 960 173V0H0Z" fill="#a9b78c"/>
+          <path d="M0 525Q174 463 293 506T583 504 960 490V600H0Z" fill="#a5b58a"/>
+          <path d="M514-30c-84 92 109 159 51 236s-108 114-37 186 64 148-6 230" fill="none" stroke="#879f81" stroke-width="103"/>
+          <path d="M514-30c-84 92 109 159 51 236s-108 114-37 186 64 148-6 230" fill="none" stroke="#7faba1" stroke-width="81"/>
+          <path d="M514-30c-84 92 109 159 51 236s-108 114-37 186 64 148-6 230" fill="none" stroke="#9cbbb0" stroke-width="48"/>
+          <g class="water-lines" fill="none" stroke="#d0dfc9" stroke-width="3" stroke-linecap="round" opacity=".65"><path d="m505 75 18 6m30 59 22 2m-31 78 13-11m-40 58 15-11m1 168 17 8m0 54 20 4m-20 63 14-4m-42-335 12-5"/></g>
+          <path d="M150 417q57-67 147-45c69 10 108-51 166-47h168c67 22 112-25 185-23" fill="none" stroke="#b7aa77" stroke-width="62" stroke-linecap="round" opacity=".48"/>
+          <path d="M150 410q57-65 147-43c69 10 108-47 166-42h168c67 22 112-25 185-23" fill="none" stroke="#d8bd83" stroke-width="49" stroke-linecap="round"/>
+          <path d="M391 338q18 97 80 96t135-85" fill="none" stroke="#92a36e" stroke-width="18" stroke-linecap="round"/>
+          <path id="fern-track" d="M391 338q18 97 80 96t135-85" fill="none" stroke="#d7c48f" stroke-width="3" stroke-dasharray="3 10" stroke-linecap="round" opacity=".55"/>
+          <g transform="translate(548 326) rotate(1)">
+            <path d="M-74-31H76V31H-74Z" fill="#69533e"/>
+            <g fill="#ad8558" stroke="#73553e" stroke-width="2"><path d="M-70-33h17v67h-17zM-51-31h17v66h-17zM-32-34h17v68h-17zM-13-32H4v65h-17zM6-34h17v69H6zM25-32h17v66H25zM44-34h17v68H44zM63-31h14v64H63z"/></g>
+            <path d="M-75-40H78M-74 40H78" stroke="#644e3a" stroke-width="6" stroke-linecap="round"/>
+            <path d="M-73-52v24m151-24v24M-73 29v23m151-23v23" stroke="#73563d" stroke-width="10" stroke-linecap="round"/>
+          </g>
+          <g id="post-office" transform="translate(183 269)">
+            <ellipse cx="0" cy="65" rx="78" ry="22" fill="#7d8e5b" opacity=".3"/>
+            <path d="M-55 64q15-29 10-92l91-4q-5 69 16 96Z" fill="#92704c" stroke="#715b3e" stroke-width="3"/>
+            <path d="M-36 50q6-28-1-60m21-10 4 46m44 17-5-57m-3 74 12 5" stroke="#715b3e" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M-18 62V25c0-34 40-36 40-1v38Z" fill="#4e4d32" stroke="#6c533a" stroke-width="4"/>
+            <path d="M-16 61V25c1-21 25-27 29-3v39" fill="#ae7950"/>
+            <circle cx="6" cy="41" r="3" fill="#e3c573"/>
+            <path d="M-67-22c-23-19-8-43 11-46-1-29 24-43 47-31 20-25 53-12 56 11 31-1 48 26 31 48 10 27-25 44-45 32-26 22-56 9-61-9-20 12-34 8-39-5Z" fill="#64754c" stroke="#53663f" stroke-width="3"/>
+            <path d="M-48-50c3-20 26-23 41-15 10-21 37-20 48-4" fill="none" stroke="#85915e" stroke-width="12" stroke-linecap="round"/>
+            <rect x="-29" y="-10" width="62" height="22" rx="3" fill="#ead9a9" stroke="#796743" stroke-width="2"/>
+            <path d="m-6-5 18 0 0 12-18 0Zm0 0 9 7 9-7" fill="none" stroke="#8b6449" stroke-width="2"/>
+            <path d="m-49 40-17 0 0 27m-5-28h26V23h-26Z" fill="#b95f3d" stroke="#78543d" stroke-width="3"/>
+          </g>
+          <g transform="translate(799 239)">
+            <ellipse cy="67" rx="76" ry="20" fill="#7d8e5b" opacity=".22"/>
+            <path d="m-73-50 6 105m132-106-5 108" stroke="#83684a" stroke-width="11" stroke-linecap="round"/>
+            <path d="M-66-32Q0 84 62-34Q1 45-66-32" fill="#c49165" stroke="#8a6547" stroke-width="3"/>
+            <path d="M-61-24Q0 64 57-25M-53-13Q0 49 49-13" fill="none" stroke="#e3c492" stroke-width="3"/>
+            <path d="m-69-55-22-16m24 15 16-23m112 25-14-24m15 26 22-18" stroke="#83684a" stroke-width="7" stroke-linecap="round"/>
+            <g fill="#6d8051"><ellipse cx="-91" cy="-73" rx="21" ry="13" transform="rotate(24 -91 -73)"/><ellipse cx="-49" cy="-82" rx="15" ry="23" transform="rotate(23 -49 -82)"/><ellipse cx="46" cy="-81" rx="15" ry="24" transform="rotate(-24 46 -81)"/><ellipse cx="82" cy="-73" rx="23" ry="13" transform="rotate(-20 82 -73)"/></g>
+          </g>
+          <g fill="#a4af82"><ellipse cx="327" cy="239" rx="71" ry="29"/><ellipse cx="713" cy="423" rx="90" ry="29"/><ellipse cx="186" cy="499" rx="68" ry="24"/></g>
+          <use href="#tree" transform="translate(65 130) scale(1.6)"/><use href="#tree" transform="translate(325 97) scale(1.2)"/><use href="#tree" transform="translate(399 175) scale(.82)"/>
+          <use href="#tree" transform="translate(720 94) scale(1.4)"/><use href="#tree" transform="translate(924 165) scale(1.3)"/>
+          <use href="#tree" transform="translate(62 520) scale(1.4)"/><use href="#tree" transform="translate(334 574) scale(1.5)"/><use href="#tree" transform="translate(932 537) scale(1.7)"/>
+          <use href="#tree" transform="translate(725 557) scale(1.05)"/><use href="#fern" transform="translate(404 405) scale(1.1)"/><use href="#fern" transform="translate(450 450)"/><use href="#fern" transform="translate(593 402) scale(-1 1)"/>
+          <use href="#fern" transform="translate(91 333)"/><use href="#fern" transform="translate(715 304) scale(.7)"/><use href="#fern" transform="translate(867 400) scale(1.2)"/>
+          <use href="#rock" transform="translate(476 182) scale(.65)"/><use href="#rock" transform="translate(608 474)"/><use href="#rock" transform="translate(328 292) scale(.7)"/>
+          <use href="#mushroom" transform="translate(317 497)"/><use href="#mushroom" transform="translate(341 502) scale(.65)"/><use href="#mushroom" transform="translate(668 187) scale(.8)"/>
+          <use href="#flower" transform="translate(278 303)"/><use href="#flower" transform="translate(292 310) scale(.6)"/><use href="#flower" transform="translate(750 397)"/><use href="#flower" transform="translate(765 391) scale(.7)"/><use href="#flower" transform="translate(238 444) scale(.7)"/>
+          <path d="M0 0h960v600H0Z" fill="url(#paper-grain)" pointer-events="none"/>
+          
+          
+          
+          <g class="map-label" fill="#53633d"><text x="183" y="449" text-anchor="middle">HOME, EVENTUALLY</text><text x="796" y="375" text-anchor="middle">THE ROYAL NAP</text></g>
+          <g fill="none" stroke="#788860" stroke-width="2" opacity=".55"><path d="m52 571 0-35m-12 15 12-15 12 15"/><circle cx="52" cy="530" r="2" fill="#788860"/></g>
+        <g fill="none" stroke="#c9b57f" stroke-width="22" stroke-linecap="round" opacity=".7"><path d="M330 367Q305 290 300 205M330 367Q340 420 365 465M655 330Q710 350 735 440M655 330Q710 250 780 190"/></g>
+<g transform="translate(302 155)"><ellipse cy="47" rx="56" ry="13" fill="#819259" opacity=".3"/><path d="M-45 5h90v43h-90Z" fill="#b28a58" stroke="#775c3d" stroke-width="3"/><path d="M-45 7v-43m90 43v-43" stroke="#775c3d" stroke-width="5"/><path d="M-57-26h114l-10-28h-94Z" fill="#bf7350" stroke="#775c3d" stroke-width="3"/><path d="M-40-53-33-27m21-26 4 26m21-26-3 26m23-26-6 26" stroke="#e3c69a" stroke-width="12"/><path d="m-25-3 18-10 21 10-21 8Z" fill="#ead49c" stroke="#81683e" stroke-width="2"/><ellipse cx="27" cy="-2" rx="10" ry="6" fill="#a4ac67"/></g>
+<g transform="translate(735 475)"><ellipse rx="83" ry="39" fill="#7faba1" stroke="#95ad85" stroke-width="8"/><ellipse cx="-30" cy="5" rx="21" ry="8" fill="#9caf70"/><ellipse cx="30" cy="-8" rx="17" ry="6" fill="#a5b47b"/><path d="m-13 20 23 1m17-25 12-1" stroke="#d0dfc9" stroke-width="2"/></g>
+<g transform="translate(371 491)"><path d="m-37-20 16 28h48l16-28Z" fill="#a37c4c" stroke="#775c3d" stroke-width="3"/><path d="m-25-17 51 21m-45 0 48-19" stroke="#c5a771" stroke-width="2"/><g fill="#ba7050"><circle cx="-18" cy="-24" r="10"/><circle cx="5" cy="-25" r="11"/><circle cx="26" cy="-23" r="9"/></g><path d="m-15-30 3-8m17 7 2-9m19 11 2-8" stroke="#65794e" stroke-width="3"/></g>
+<g transform="translate(780 133)"><path d="M0 43V-35" stroke="#775c3d" stroke-width="5"/><path d="M3-34h48l-13 17 13 17H3Z" fill="#bf8c48" stroke="#775c3d" stroke-width="2"/><path d="m12-21 7 5 7-8 7 8 7-5-4 13H15Z" fill="#ead9a9"/></g>
+<use href="#mushroom" transform="translate(344 239) scale(1.3)"/><use href="#mushroom" transform="translate(378 246)"/>
+</svg>

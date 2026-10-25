@@ -1,0 +1,84 @@
+Browser tab: 28, Title: "NapQuest · Your woodland", URL: "http://127.0.0.1:8788/?defense=5".
+0 AXWebArea NapQuest · Your woodland, URL: 127.0.0.1:8788/?defense=5
+	1 container
+		2 link Description: NapQuestDefense practice · level 5, Value: 127.0.0.1:8788/
+		3 checkbox Description: Mute game sounds, Value: 0, ID: mute-all
+		4 button Settings, ID: open-settings
+	36 container
+		37 container Game world
+			38 text Supplied defense scenario: a prebuilt village, defenders and materials. Separate from your earned progress.
+			39 heading Mossbrook · Acorn keep, Value: 1, ID: quest-title
+				40 text Mossbrook · Acorn keep
+			41 text Energy 100
+			42 text 47 coins
+			43 text The Acorn keep is yours
+			44 button Walk to next stop, ID: story-route
+			45 text Tap to gather, collect or interact. Tap empty ground to walk.
+			46 container Description: Woodland map. Tap an object to walk over and interact. WASD or arrows to move., ID: viewport
+				47 image terrain
+				48 image foreground
+				49 container
+					50 text Mossbrook village
+					51 text Bell silent · time to sleep
+				52 button Go home, ID: go-home
+				53 container Map zoom
+					54 button Description: Zoom out, ID: zoom-out
+					55 button Description: Zoom in, ID: zoom-in
+				56 container Selected object
+					57 heading Acorn keep, Value: 2, ID: target-name
+						58 text Acorn keep
+					59 text Go inside and sleep in bed. The bell is silent.
+					60 button Enter home & sleep, ID: interact
+			61 container
+				62 text -2, 0
+				63 text Laya · running locally
+				64 text Saved on this device
+		65 container Description: Game controls, ID: play-panel
+			66 heading Your village, Value: 2, ID: panel-title
+				67 text Your village
+			68 button Description: Close panel and return to map, ID: close-panel
+			69 container
+				70 heading Acorn keep · level 5 / 5, Value: 2, ID: village-level
+					71 text Acorn keep · level 5 / 5
+				72 text Level 5 chapter complete. Your Acorn crest is earned.
+				73 button (disabled) Acorn keep complete, ID: upgrade-home
+				74 text Goose Captain defeated. Your keep carries the Acorn crest. Replay sieges or keep building.
+				75 text Next attack: Boar breaker + Fox bandit + Fox bandit + Goose Captain. Boars break walls; foxes use openings.
+				76 text Raids won: 1 · Acorn crest earned
+				77 button Challenge Goose Captain, ID: start-raid
+				78 text Raids start when you choose. Walls absorb attacks; gates let friendly traffic through. Boars can break them. Defenders recover after each battle.
+				79 heading Your defenders, Value: 2
+					80 text Your defenders
+				81 text 4/8 defenders · Barracks ready
+				82 container troop-buttons
+					83 button Train Rabbit guard Lv 3 · 1 food + 1 coins · 100 HP · melee
+						84 text Train Rabbit guard
+						85 text Lv 3 · 1 food + 1 coins · 100 HP · melee
+					86 button Train Hedgehog ranger Lv 4 · 1 food + 2 coins · 75 HP · ranged
+						87 text Train Hedgehog ranger
+						88 text Lv 4 · 1 food + 2 coins · 75 HP · ranged
+				89 text Rabbit guard 100/100 · Rabbit guard 100/100 · Hedgehog ranger 75/75 · Hedgehog ranger 75/75
+				90 heading Village production, Value: 2
+					91 text Village production
+				92 container production-status
+					93 button Lumber mill · 16/16 · Visit
+					94 button Stone quarry · 16/16 · Visit
+					95 button Gold mine · 10/10 · Visit
+				96 text Mines work while this village is open. Select a mine, walk over and collect. Stock is saved, with no offline catch-up.
+				97 container Home progression
+					98 container home-evolution
+						99 button Preview level 1: Humble hollow
+						100 button Preview level 2: Timber lodge
+						101 button Preview level 3: Village hall
+						102 button Preview level 4: Woodland stronghold
+						103 button Preview level 5: Acorn keep
+					104 text Level 5: Eight defenders and the Goose Captain final siege. Defeat him to earn the crest.
+	29 container Game navigation
+		30 button Map
+		31 button Store
+		32 button Village
+		33 button Laya
+		34 button Bag
+		35 button Settings
+
+The focused UI element is 66 heading Your village, Value: 2, ID: panel-title

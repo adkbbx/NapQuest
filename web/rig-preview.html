@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NapQuest character motion study</title>
+<style>
+*{box-sizing:border-box}body{margin:24px;background:#f4ebd8;color:#382e26;font:14px system-ui}h1{font:30px Georgia;margin:0 0 12px}p{max-width:70ch;line-height:1.6}button{font:inherit;padding:8px 14px;margin:0 8px 16px 0;background:#53633d;color:#fff9e9;border:0;border-radius:5px}main{display:grid;grid-template-columns:repeat(6,minmax(125px,1fr));gap:12px}figure{margin:0;background:#d8dfc2;padding:10px 6px 0}figcaption{text-align:center}.actor{width:100%;max-width:200px;margin:auto;border-bottom:1px solid #79865b}.skeleton{display:block;width:100%}@media(max-width:850px){main{grid-template-columns:repeat(3,1fr)}}
+</style>
+<h1>Character motion study</h1><p>One row per character. Standing, walking, looking, waving, resting, and reduced motion. The line marks the ground. The artwork keeps its original proportions.</p>
+<button id="pause">Pause motion</button><button id="settle">Show settled poses</button><main></main>
+<script type="module">
+import {CutoutRig} from './rig.js';
+const rigs=[];let paused=false;
+for(const kind of ['mallow','goose','fox','bee'])for(const mode of ['idle','walk','look','wave','nap','reduced']){
+ const figure=document.createElement('figure'),caption=document.createElement('figcaption'),host=document.createElement('div');
+ caption.textContent=`${kind} · ${mode}`;host.className='actor';figure.append(caption,host);document.querySelector('main').append(figure);
+ rigs.push({rig:new CutoutRig(kind,host),mode});
+}
+document.querySelector('#pause').onclick=e=>{paused=!paused;e.target.textContent=paused?'Resume motion':'Pause motion';};
+document.querySelector('#settle').onclick=()=>{for(let i=0;i<120;i++)for(const {rig,mode}of rigs)rig.update(1/60,mode==='walk'?110:0,mode,mode==='reduced');};
+let last=performance.now();function frame(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(!paused)for(const {rig,mode}of rigs)rig.update(dt,mode==='walk'?110:0,mode,mode==='reduced');requestAnimationFrame(frame);}requestAnimationFrame(frame);
+</script></html>

@@ -1,0 +1,709 @@
+{
+  "classifications": [
+    {
+      "goal": "Earn 10 coins",
+      "project": {
+        "kind": "earn",
+        "goal": "Earn 10 coins",
+        "meaning": {
+          "choice": "earn",
+          "probabilities": {
+            "explore": 0,
+            "spend": 0,
+            "earn": 1,
+            "upgrade": 0,
+            "rest": 0,
+            "build": 0,
+            "recruit": 0,
+            "gather": 0,
+            "shop": 0,
+            "craft": 0,
+            "maintain": 0,
+            "other": 0
+          },
+          "elapsed_ms": 1555,
+          "model": "convaiinnovations/laya",
+          "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+        },
+        "schema": 4,
+        "targetCoins": 10
+      }
+    },
+    {
+      "goal": "Build a quarry",
+      "project": {
+        "kind": "build",
+        "goal": "Build a quarry",
+        "meaning": {
+          "choice": "build",
+          "probabilities": {
+            "explore": 0,
+            "spend": 0,
+            "earn": 0,
+            "upgrade": 0,
+            "rest": 0,
+            "build": 1,
+            "recruit": 0,
+            "gather": 0,
+            "shop": 0,
+            "craft": 0,
+            "maintain": 0,
+            "other": 0
+          },
+          "elapsed_ms": 1503,
+          "model": "convaiinnovations/laya",
+          "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+        },
+        "schema": 4,
+        "building": "quarry",
+        "amount": 1
+      }
+    },
+    {
+      "goal": "Train 2 guards",
+      "project": {
+        "kind": "recruit",
+        "goal": "Train 2 guards",
+        "meaning": {
+          "choice": "recruit",
+          "probabilities": {
+            "explore": 0,
+            "spend": 0,
+            "earn": 0,
+            "upgrade": 0,
+            "rest": 0,
+            "build": 0,
+            "recruit": 1,
+            "gather": 0,
+            "shop": 0,
+            "craft": 0,
+            "maintain": 0,
+            "other": 0
+          },
+          "elapsed_ms": 1533,
+          "model": "convaiinnovations/laya",
+          "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+        },
+        "schema": 4,
+        "troop": "guard",
+        "amount": 2
+      }
+    },
+    {
+      "goal": "Clear a tree stump",
+      "project": {
+        "kind": "clear",
+        "goal": "Clear a tree stump",
+        "meaning": {
+          "choice": "maintain",
+          "probabilities": {
+            "explore": 0.0001,
+            "spend": 0.0002,
+            "earn": 0.0005,
+            "upgrade": 0.0001,
+            "rest": 0,
+            "build": 0.0001,
+            "recruit": 0,
+            "gather": 0,
+            "shop": 0,
+            "craft": 0,
+            "maintain": 0.9987,
+            "other": 0.0002
+          },
+          "elapsed_ms": 1588,
+          "model": "convaiinnovations/laya",
+          "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+        },
+        "schema": 4,
+        "object": "stump",
+        "amount": 1
+      }
+    },
+    {
+      "goal": "Repair my walls",
+      "project": {
+        "kind": "repair",
+        "goal": "Repair my walls",
+        "meaning": {
+          "choice": "maintain",
+          "probabilities": {
+            "explore": 0.0003,
+            "spend": 0.003,
+            "earn": 0.0013,
+            "upgrade": 0.3325,
+            "rest": 0.0002,
+            "build": 0.0258,
+            "recruit": 0.0002,
+            "gather": 0.0001,
+            "shop": 0.0003,
+            "craft": 0.001,
+            "maintain": 0.6252,
+            "other": 0.0102
+          },
+          "elapsed_ms": 1453,
+          "model": "convaiinnovations/laya",
+          "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+        },
+        "schema": 4,
+        "building": "wall"
+      }
+    },
+    {
+      "goal": "Move my home beside the market",
+      "project": {
+        "kind": "move",
+        "goal": "Move my home beside the market",
+        "meaning": {
+          "choice": "maintain",
+          "probabilities": {
+            "explore": 0.0054,
+            "spend": 0.0395,
+            "earn": 0.0075,
+            "upgrade": 0.0193,
+            "rest": 0.0431,
+            "build": 0.0071,
+            "recruit": 0.0128,
+            "gather": 0.0052,
+            "shop": 0.014,
+            "craft": 0.0292,
+            "maintain": 0.7399,
+            "other": 0.077
+          },
+          "elapsed_ms": 1599,
+          "model": "convaiinnovations/laya",
+          "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+        },
+        "schema": 4,
+        "object": "home",
+        "anchor": "market"
+      }
+    },
+    {
+      "goal": "Buy work gloves",
+      "project": {
+        "kind": "shop",
+        "goal": "Buy work gloves",
+        "meaning": {
+          "choice": "shop",
+          "probabilities": {
+            "explore": 0,
+            "spend": 0,
+            "earn": 0,
+            "upgrade": 0,
+            "rest": 0,
+            "build": 0,
+            "recruit": 0,
+            "gather": 0,
+            "shop": 1,
+            "craft": 0,
+            "maintain": 0,
+            "other": 0
+          },
+          "elapsed_ms": 1509,
+          "model": "convaiinnovations/laya",
+          "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+        },
+        "schema": 4,
+        "item": "gloves",
+        "amount": 1
+      }
+    }
+  ],
+  "events": [
+    {
+      "step": 0,
+      "choice": "forage_to_sell",
+      "coins": 3,
+      "earned": 0,
+      "energy": 98.35000000000001
+    },
+    {
+      "step": 1,
+      "choice": "sell_berries",
+      "coins": 4,
+      "earned": 1,
+      "energy": 92.85000000000004
+    },
+    {
+      "step": 2,
+      "choice": "forage_to_sell",
+      "coins": 4,
+      "earned": 1,
+      "energy": 85.70000000000007
+    },
+    {
+      "step": 3,
+      "choice": "sell_berries",
+      "coins": 5,
+      "earned": 2,
+      "energy": 80.7500000000001
+    },
+    {
+      "step": 4,
+      "choice": "forage_to_sell",
+      "coins": 5,
+      "earned": 2,
+      "energy": 73.60000000000014
+    },
+    {
+      "step": 5,
+      "choice": "sell_berries",
+      "coins": 6,
+      "earned": 3,
+      "energy": 66.45000000000017
+    },
+    {
+      "step": 6,
+      "choice": "forage_to_sell",
+      "coins": 6,
+      "earned": 3,
+      "energy": 58.200000000000216
+    },
+    {
+      "step": 7,
+      "choice": "sell_berries",
+      "coins": 7,
+      "earned": 4,
+      "energy": 51.05000000000025
+    },
+    {
+      "step": 8,
+      "choice": "forage_to_sell",
+      "coins": 7,
+      "earned": 4,
+      "energy": 43.90000000000029
+    },
+    {
+      "step": 9,
+      "choice": "sell_berries",
+      "coins": 8,
+      "earned": 5,
+      "energy": 36.75000000000033
+    },
+    {
+      "step": 10,
+      "choice": "gather_wood",
+      "coins": 8,
+      "earned": 5,
+      "energy": 27.650000000000333
+    },
+    {
+      "step": 11,
+      "choice": "gather_stone",
+      "coins": 8,
+      "earned": 5,
+      "energy": 17.90000000000033
+    },
+    {
+      "step": 12,
+      "choice": "gather_wood",
+      "coins": 8,
+      "earned": 5,
+      "energy": 9.900000000000329
+    },
+    {
+      "step": 13,
+      "choice": "home",
+      "coins": 8,
+      "earned": 5,
+      "energy": 15.500000000000327
+    },
+    {
+      "step": 14,
+      "choice": "forage_to_sell",
+      "coins": 8,
+      "earned": 5,
+      "energy": 11.650000000000322
+    },
+    {
+      "step": 15,
+      "choice": "home",
+      "coins": 8,
+      "earned": 5,
+      "energy": 20.00000000000032
+    },
+    {
+      "step": 16,
+      "choice": "repair_bridge",
+      "coins": 8,
+      "earned": 5,
+      "energy": 15.050000000000313
+    },
+    {
+      "step": 17,
+      "choice": "home",
+      "coins": 8,
+      "earned": 5,
+      "energy": 20.100000000000307
+    },
+    {
+      "step": 18,
+      "choice": "sell_berries",
+      "coins": 9,
+      "earned": 6,
+      "energy": 16.250000000000302
+    },
+    {
+      "step": 19,
+      "choice": "home",
+      "coins": 9,
+      "earned": 6,
+      "energy": 23.5000000000003
+    },
+    {
+      "step": 20,
+      "choice": "forage_to_sell",
+      "coins": 9,
+      "earned": 6,
+      "energy": 17.45000000000029
+    },
+    {
+      "step": 21,
+      "choice": "home",
+      "coins": 9,
+      "earned": 6,
+      "energy": 23.600000000000286
+    },
+    {
+      "step": 22,
+      "choice": "sell_berries",
+      "coins": 10,
+      "earned": 7,
+      "energy": 18.65000000000028
+    },
+    {
+      "step": 23,
+      "choice": "home",
+      "coins": 10,
+      "earned": 7,
+      "energy": 25.900000000000276
+    },
+    {
+      "step": 24,
+      "choice": "forage_to_sell",
+      "coins": 10,
+      "earned": 7,
+      "energy": 20.40000000000027
+    },
+    {
+      "step": 25,
+      "choice": "sell_berries",
+      "coins": 11,
+      "earned": 8,
+      "energy": 13.25000000000026
+    },
+    {
+      "step": 26,
+      "choice": "home",
+      "coins": 11,
+      "earned": 8,
+      "energy": 20.500000000000256
+    },
+    {
+      "step": 27,
+      "choice": "forage_to_sell",
+      "coins": 11,
+      "earned": 8,
+      "energy": 17.750000000000252
+    },
+    {
+      "step": 28,
+      "choice": "sell_berries",
+      "coins": 12,
+      "earned": 9,
+      "energy": 12.250000000000245
+    },
+    {
+      "step": 29,
+      "choice": "home",
+      "coins": 12,
+      "earned": 9,
+      "energy": 19.50000000000024
+    },
+    {
+      "step": 30,
+      "choice": "home",
+      "coins": 12,
+      "earned": 9,
+      "energy": 29.50000000000024
+    },
+    {
+      "step": 31,
+      "choice": "forage_to_sell",
+      "coins": 12,
+      "earned": 9,
+      "energy": 22.350000000000232
+    },
+    {
+      "step": 32,
+      "choice": "sell_berries",
+      "coins": 13,
+      "earned": 10,
+      "energy": 13.550000000000221
+    }
+  ],
+  "final": {
+    "version": 4,
+    "seed": 41,
+    "locations": {
+      "home": [
+        -2,
+        -1
+      ],
+      "bench": [
+        0,
+        -2
+      ],
+      "market": [
+        4,
+        -2
+      ],
+      "picnic": [
+        6,
+        1
+      ],
+      "office": [
+        10,
+        11
+      ],
+      "hive": [
+        13,
+        12
+      ],
+      "bell": [
+        -1,
+        1
+      ],
+      "project": [
+        3,
+        4
+      ]
+    },
+    "artifacts": {},
+    "changes": [
+      [
+        "-2,3",
+        {
+          "object": {
+            "kind": "sapling",
+            "id": "-2,3",
+            "planted": 27
+          }
+        }
+      ],
+      [
+        "3,-11",
+        {
+          "object": {
+            "kind": "sapling",
+            "id": "3,-11",
+            "planted": 2
+          }
+        }
+      ],
+      [
+        "-3,-9",
+        {
+          "object": {
+            "kind": "sapling",
+            "id": "-3,-9",
+            "planted": 24
+          }
+        }
+      ],
+      [
+        "1,-13",
+        {
+          "object": {
+            "kind": "sapling",
+            "id": "1,-13",
+            "planted": 6
+          }
+        }
+      ],
+      [
+        "7,-13",
+        {
+          "object": {
+            "kind": "sapling",
+            "id": "7,-13",
+            "planted": 8
+          }
+        }
+      ],
+      [
+        "3,-5",
+        {
+          "object": {
+            "kind": "stump",
+            "id": "3,-5"
+          }
+        }
+      ],
+      [
+        "2,-7",
+        {
+          "object": null
+        }
+      ],
+      [
+        "0,-7",
+        {
+          "object": {
+            "kind": "stump",
+            "id": "0,-7"
+          }
+        }
+      ],
+      [
+        "-9,-2",
+        {
+          "object": {
+            "kind": "sapling",
+            "id": "-9,-2",
+            "planted": 20
+          }
+        }
+      ],
+      [
+        "-6,-9",
+        {
+          "object": {
+            "kind": "sapling",
+            "id": "-6,-9",
+            "planted": 31
+          }
+        }
+      ]
+    ],
+    "inventory": {
+      "wood": 0,
+      "stone": 0,
+      "fiber": 12,
+      "berries": 0,
+      "food": 1,
+      "honey": 0,
+      "seeds": 11,
+      "muffler": 0,
+      "picnic": 0,
+      "coins": 13
+    },
+    "player": {
+      "x": 4,
+      "y": -3,
+      "energy": 13.550000000000221,
+      "sleeping": false,
+      "shelter": null,
+      "restElapsed": 7
+    },
+    "flags": {
+      "bridge": true,
+      "job": false,
+      "escort": false,
+      "manager": false,
+      "quiet": false,
+      "goose": false,
+      "rested": false
+    },
+    "turn": 33,
+    "log": [
+      "2 wood gathered. Higher home levels improve your tools.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Berries, fiber, and a seed. A surprisingly productive shrub.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "The crossing is repaired. The bees have noticed a potential employee.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Two berries sold. Kevin calls this a vertically integrated lunch.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Berries, fiber, and a seed. A surprisingly productive shrub.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Two berries sold. Kevin calls this a vertically integrated lunch.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Berries, fiber, and a seed. A surprisingly productive shrub.",
+      "Two berries sold. Kevin calls this a vertically integrated lunch.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Berries, fiber, and a seed. A surprisingly productive shrub.",
+      "Two berries sold. Kevin calls this a vertically integrated lunch.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Mallow goes inside and curls up in bed. Any bee coworkers head back to the apiary.",
+      "DING! The village bell wakes Mallow. Find honey wax, or upgrade home to level 2 for a soundproof bedroom.",
+      "Berries, fiber, and a seed. A surprisingly productive shrub.",
+      "Two berries sold. Kevin calls this a vertically integrated lunch."
+    ],
+    "visited": [
+      "0,0",
+      "-1,0",
+      "1,0",
+      "1,-1",
+      "0,-1",
+      "1,-2",
+      "1,-3",
+      "0,-3",
+      "0,-2",
+      "-1,-3",
+      "-1,-2",
+      "-1,-1",
+      "0,-4",
+      "1,-4",
+      "0,1",
+      "-1,1",
+      "-2,-1",
+      "-3,-1",
+      "-2,-3"
+    ],
+    "travelled": 279,
+    "settlement": {
+      "level": 1,
+      "wins": 0,
+      "gardenTurn": 32,
+      "plantedCount": 0,
+      "clearedCount": 0,
+      "nextTroopId": 1,
+      "captainDefeated": false
+    },
+    "troops": [],
+    "raid": null,
+    "ambition": "Quiet the village bell, go inside my home, and enjoy a peaceful nap with as little work as possible.",
+    "autorun": false,
+    "project": {
+      "kind": "earn",
+      "goal": "Earn 10 coins",
+      "meaning": {
+        "choice": "earn",
+        "probabilities": {
+          "explore": 0,
+          "spend": 0,
+          "earn": 1,
+          "upgrade": 0,
+          "rest": 0,
+          "build": 0,
+          "recruit": 0,
+          "gather": 0,
+          "shop": 0,
+          "craft": 0,
+          "maintain": 0,
+          "other": 0
+        },
+        "elapsed_ms": 1602,
+        "model": "convaiinnovations/laya",
+        "revision": "7b928d828b7b0e022f929d9bd2e44165aa270148"
+      },
+      "schema": 4,
+      "targetCoins": 10,
+      "started": true,
+      "initialCoins": 3,
+      "earnedCoins": 10,
+      "initialWins": 0,
+      "initialAmount": 0,
+      "initialCount": 0
+    }
+  }
+}

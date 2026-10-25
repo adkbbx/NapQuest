@@ -1,0 +1,298 @@
+TAP version 13
+# Subtest: earning counts new income, never the opening purse, spending or refunds
+ok 1 - earning counts new income, never the opening purse, spending or refunds
+  ---
+  duration_ms: 16.1676
+  type: 'test'
+  ...
+# Subtest: gold collection and berry sales count as income, persist, and quiet bells do not block jobs
+ok 2 - gold collection and berry sales count as income, persist, and quiet bells do not block jobs
+  ---
+  duration_ms: 40.0479
+  type: 'test'
+  ...
+# Subtest: Laya action tools execute the same building, shopping, training, crafting and planting methods as manual play
+ok 3 - Laya action tools execute the same building, shopping, training, crafting and planting methods as manual play
+  ---
+  duration_ms: 28.4546
+  type: 'test'
+  ...
+# Subtest: repairing, moving and dismantling preserve their actual costs and completion state
+ok 4 - repairing, moving and dismantling preserve their actual costs and completion state
+  ---
+  duration_ms: 13.9194
+  type: 'test'
+  ...
+# Subtest: clear stump frees persisted building ground; sitting remains an explicit alternative
+ok 5 - clear stump frees persisted building ground; sitting remains an explicit alternative
+  ---
+  duration_ms: 9.7283
+  type: 'test'
+  ...
+# Subtest: prerequisites and limits prevent free buildings or oversized armies
+ok 6 - prerequisites and limits prevent free buildings or oversized armies
+  ---
+  duration_ms: 252.0962
+  type: 'test'
+  ...
+# Subtest: specific interactions, job exit, bee dismissal, eating and goose payments stop after the requested effect
+ok 7 - specific interactions, job exit, bee dismissal, eating and goose payments stop after the requested effect
+  ---
+  duration_ms: 1.405
+  type: 'test'
+  ...
+# Subtest: ringing bell interrupts indoor sleep; quiet home completes a real rest
+ok 8 - ringing bell interrupts indoor sleep; quiet home completes a real rest
+  ---
+  duration_ms: 12.059
+  type: 'test'
+  ...
+# Subtest: inspecting never spends money and names risks before commitment
+ok 9 - inspecting never spends money and names risks before commitment
+  ---
+  duration_ms: 6.1159
+  type: 'test'
+  ...
+# Subtest: an insulated bedroom permits rest without claiming the bell story is complete
+ok 10 - an insulated bedroom permits rest without claiming the bell story is complete
+  ---
+  duration_ms: 13.1379
+  type: 'test'
+  ...
+# Subtest: the next stop follows resources, repairs, crafting and the final indoor nap
+ok 11 - the next stop follows resources, repairs, crafting and the final indoor nap
+  ---
+  duration_ms: 24.1092
+  type: 'test'
+  ...
+# Subtest: version-one saves retain inventory and edits under the narrower path generator
+ok 12 - version-one saves retain inventory and edits under the narrower path generator
+  ---
+  duration_ms: 1.5853
+  type: 'test'
+  ...
+# Subtest: fitting a muffler requires a new indoor nap even when a previous save recorded rest
+ok 13 - fitting a muffler requires a new indoor nap even when a previous save recorded rest
+  ---
+  duration_ms: 0.7781
+  type: 'test'
+  ...
+# Subtest: chunks are deterministic across load order and negative coordinates
+ok 14 - chunks are deterministic across load order and negative coordinates
+  ---
+  duration_ms: 12.7695
+  type: 'test'
+  ...
+# Subtest: resources, edits, planted bushes and buildings survive a saved world
+ok 15 - resources, edits, planted bushes and buildings survive a saved world
+  ---
+  duration_ms: 9.9399
+  type: 'test'
+  ...
+# Subtest: the complete story can be played through actual world interactions
+ok 16 - the complete story can be played through actual world interactions
+  ---
+  duration_ms: 3.4154
+  type: 'test'
+  ...
+# Subtest: invalid interactions never consume materials and water blocks walking
+ok 17 - invalid interactions never consume materials and water blocks walking
+  ---
+  duration_ms: 4.3504
+  type: 'test'
+  ...
+# Subtest: honey employment, quitting, goose theft and trading change actual state
+ok 18 - honey employment, quitting, goose theft and trading change actual state
+  ---
+  duration_ms: 2.2295
+  type: 'test'
+  ...
+# Subtest: repaired bridge exits remain clear across generated seeds, including the blocked live-world regression
+ok 19 - repaired bridge exits remain clear across generated seeds, including the blocked live-world regression
+  ---
+  duration_ms: 81.3354
+  type: 'test'
+  ...
+# Subtest: a moved home remains the home for saving, upgrades, AI and raids
+ok 20 - a moved home remains the home for saving, upgrades, AI and raids
+  ---
+  duration_ms: 273.7983
+  type: 'test'
+  ...
+# Subtest: moving a stocked building preserves stock, durability, payment and the resource balance
+ok 21 - moving a stocked building preserves stock, durability, payment and the resource balance
+  ---
+  duration_ms: 3.2414
+  type: 'test'
+  ...
+# Subtest: invalid moves never erase assets, close the home door or edit during a raid
+ok 22 - invalid moves never erase assets, close the home door or edit during a raid
+  ---
+  duration_ms: 0.8187
+  type: 'test'
+  ...
+# Subtest: coin construction pays on a valid placement only and refunds coins rather than free materials
+ok 23 - coin construction pays on a valid placement only and refunds coins rather than free materials
+  ---
+  duration_ms: 0.7365
+  type: 'test'
+  ...
+# Subtest: store artifacts have a real effect, cannot be bought twice, and survive reload
+ok 24 - store artifacts have a real effect, cannot be bought twice, and survive reload
+  ---
+  duration_ms: 0.7758
+  type: 'test'
+  ...
+# Subtest: naps wake once after the chosen time, preserve story completion and resume projects
+ok 25 - naps wake once after the chosen time, preserve story completion and resume projects
+  ---
+  duration_ms: 10.4805
+  type: 'test'
+  ...
+# Subtest: master mute persists even before audio is unlocked and keeps the effects mix
+ok 26 - master mute persists even before audio is unlocked and keeps the effects mix
+  ---
+  duration_ms: 0.8918
+  type: 'test'
+  ...
+# Subtest: every home level has a different appearance and unlocks a concrete reward
+ok 27 - every home level has a different appearance and unlocks a concrete reward
+  ---
+  duration_ms: 16.2344
+  type: 'test'
+  ...
+# Subtest: quarries produce capped stock over active time and collection moves it once into inventory
+ok 28 - quarries produce capped stock over active time and collection moves it once into inventory
+  ---
+  duration_ms: 4.0854
+  type: 'test'
+  ...
+# Subtest: troops require the right level, a barracks, training costs and a free camp slot
+ok 29 - troops require the right level, a barracks, training costs and a free camp slot
+  ---
+  duration_ms: 4.0862
+  type: 'test'
+  ...
+# Subtest: gates allow friendly walking while boars actually damage and breach them
+ok 30 - gates allow friendly walking while boars actually damage and breach them
+  ---
+  duration_ms: 8.8983
+  type: 'test'
+  ...
+# Subtest: walls delay the first damage to home and repairs pay real resources
+ok 31 - walls delay the first damage to home and repairs pay real resources
+  ---
+  duration_ms: 782.8393
+  type: 'test'
+  ...
+# Subtest: a prepared army and defenses can defeat the captain; rewards and crest persist once
+ok 32 - a prepared army and defenses can defeat the captain; rewards and crest persist once
+  ---
+  duration_ms: 19.612
+  type: 'test'
+  ...
+# Subtest: old saves keep materials, edits and achievements while targeting the five-level chapter
+ok 33 - old saves keep materials, edits and achievements while targeting the five-level chapter
+  ---
+  duration_ms: 0.6084
+  type: 'test'
+  ...
+# Subtest: Mallow arm crop excludes the neighboring head fragment
+ok 34 - Mallow arm crop excludes the neighboring head fragment
+  ---
+  duration_ms: 1.7844
+  type: 'test'
+  ...
+# Subtest: head and shoulders inherit torso movement and every cutout preserves aspect
+ok 35 - head and shoulders inherit torso movement and every cutout preserves aspect
+  ---
+  duration_ms: 10.9328
+  type: 'test'
+  ...
+# Subtest: idle feet stay planted and heads do not wobble; poses ease instead of snapping
+ok 36 - idle feet stay planted and heads do not wobble; poses ease instead of snapping
+  ---
+  duration_ms: 64.1791
+  type: 'test'
+  ...
+# Subtest: reduced motion is stable while still showing the requested pose
+ok 37 - reduced motion is stable while still showing the requested pose
+  ---
+  duration_ms: 7.4547
+  type: 'test'
+  ...
+# Subtest: all five home levels consume real resources and survive reload
+ok 38 - all five home levels consume real resources and survive reload
+  ---
+  duration_ms: 6.0949
+  type: 'test'
+  ...
+# Subtest: home projects expose missing materials, earnings, and the actual upgrade, without a premature finish
+ok 39 - home projects expose missing materials, earnings, and the actual upgrade, without a premature finish
+  ---
+  duration_ms: 52.2682
+  type: 'test'
+  ...
+# Subtest: exploration budgets include a route home and spending stops only at zero coins
+ok 40 - exploration budgets include a route home and spending stops only at zero coins
+  ---
+  duration_ms: 118.5946
+  type: 'test'
+  ...
+# Subtest: a previous insulated nap cannot finish an unfinished bell-story project
+ok 41 - a previous insulated nap cannot finish an unfinished bell-story project
+  ---
+  duration_ms: 11.2474
+  type: 'test'
+  ...
+# Subtest: watchtowers visibly modeled as shots repel raids once; losses preserve buildings and home level
+ok 42 - watchtowers visibly modeled as shots repel raids once; losses preserve buildings and home level
+  ---
+  duration_ms: 17.1776
+  type: 'test'
+  ...
+# Subtest: gardens, escort endings and saved projects have durable consequences
+ok 43 - gardens, escort endings and saved projects have durable consequences
+  ---
+  duration_ms: 80.6024
+  type: 'test'
+  ...
+# Subtest: movement never overshoots a destination, including a zero-length segment
+ok 44 - movement never overshoots a destination, including a zero-length segment
+  ---
+  duration_ms: 3.1108
+  type: 'test'
+  ...
+# Subtest: both bank crossings pass over the same bridge in the right order
+ok 45 - both bank crossings pass over the same bridge in the right order
+  ---
+  duration_ms: 0.6874
+  type: 'test'
+  ...
+# Subtest: followers track the route around corners rather than cutting toward the leader
+ok 46 - followers track the route around corners rather than cutting toward the leader
+  ---
+  duration_ms: 1.8863
+  type: 'test'
+  ...
+# Subtest: background-tab time gaps cannot advance the whole chase in one frame
+ok 47 - background-tab time gaps cannot advance the whole chase in one frame
+  ---
+  duration_ms: 0.3837
+  type: 'test'
+  ...
+# Subtest: all generated skeletal parts have usable crops within their original atlas
+ok 48 - all generated skeletal parts have usable crops within their original atlas
+  ---
+  duration_ms: 0.9476
+  type: 'test'
+  ...
+1..48
+# tests 48
+# suites 0
+# pass 48
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1167.6435

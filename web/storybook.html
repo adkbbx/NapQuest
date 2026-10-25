@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Give Mallow one goal, then watch a local Laya model get a sleepy sloth into seven decisions worth of trouble.">
+<title>NapQuest · One goal. Zero supervision.</title><link rel="icon" href="assets/mallow.png"><link rel="stylesheet" href="adventure.css?v=3"></head>
+<body><main>
+<header class="masthead"><a class="wordmark" href="./" aria-label="NapQuest home"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M5 21C3 9 15 3 25 6c0 11-7 19-17 17m0 0L21 10"/></svg>NapQuest<span>One goal. Zero supervision.</span></a><div class="header-actions"><button class="ghost" id="toggle-journal" aria-expanded="false" aria-controls="watch-panel">Show journal</button><button class="ghost" id="sound" aria-pressed="false">Sound off</button></div></header>
+<div class="intro-line"><h1>An afternoon, poorly supervised.</h1><p>You provide the ambition. Mallow provides the complications.</p></div>
+<form id="goal-form" class="goal-form">
+<label for="goal">What should Mallow try to accomplish?</label>
+<textarea id="goal" maxlength="280" rows="1" required placeholder="Give Mallow one ambition.">Be a sneaky thief. Steal food and escape without getting caught.</textarea>
+<button id="go" class="primary" type="submit">Set Mallow loose <span aria-hidden="true">→</span></button>
+<div class="presets" aria-label="Example goals">
+<button type="button" data-goal="Bring home a huge lunch without spending any money.">Lunch on a budget</button>
+<button type="button" data-goal="Become the king of the woods. Get a crown and become a famous local legend.">Questionable royalty</button>
+<button type="button" data-goal="Make as many friends as possible. Help others, be kind, and avoid causing trouble.">A friend-shaped afternoon</button>
+<button type="button" data-goal="Take as many naps as possible. Avoid work and come home thoroughly rested.">Professional napping</button>
+<button type="button" data-goal="Be a sneaky thief. Steal food and escape without getting caught.">Lunch, questionable ethics</button>
+</div></form>
+<div id="run-bar" class="run-bar" hidden><div class="run-goal"><strong id="goal-display"></strong><span id="ambition"></span></div><div class="run-controls"><button id="pause" class="ghost" aria-pressed="false">Pause</button><button id="speed" class="ghost" aria-label="Change adventure speed">1× speed</button><button id="change-goal" class="ghost">New goal</button></div></div>
+<div class="game-layout">
+<div>
+<section class="map-shell" aria-label="Mallow's autonomous adventure">
+<div class="map-top"><span id="day-name">Mossbrook Woods</span><div id="progress-dots" class="progress-dots" aria-label="Seven decisions"></div></div>
+<div id="world" class="world">
+<img class="world-art" src="assets/woodland-painted.png" alt="An illustrated woodland with a market, orchard, duck pond, royal hill, goblin bridge and Mallow's home." draggable="false">
+<svg class="trail-svg" preserveAspectRatio="none" viewBox="0 0 960 600" aria-hidden="true"><polyline id="trail" points="190,375"/></svg>
+<div id="weather" class="weather" aria-hidden="true"></div>
+<div id="scene-name" class="scene-name">A small sloth. A dangerously open schedule.</div>
+<div id="npc" class="npc" hidden aria-hidden="true"></div>
+<div id="actor" class="actor">
+<div class="actor-shadow"></div><img src="assets/mallow.png" alt="Mallow, the sloth adventurer" draggable="false">
+<svg class="crown-hat" viewBox="0 0 80 55" aria-hidden="true"><path d="m7 13 16 13 17-23 17 23 16-13-9 33H16Z" fill="#d5a44b" stroke="#795632" stroke-width="4"/><path d="M17 38h46" stroke="#f7d47f" stroke-width="5"/><circle cx="40" cy="29" r="5" fill="#b96b45"/></svg>
+<span class="zzz" aria-hidden="true">z z z</span>
+<svg class="companion" viewBox="0 0 100 65" aria-hidden="true"><g fill="#e2cc86" stroke="#7e7548" stroke-width="2"><ellipse cx="28" cy="43" rx="20" ry="13"/><circle cx="41" cy="24" r="13"/><ellipse cx="70" cy="48" rx="17" ry="10"/><circle cx="81" cy="34" r="11"/></g><g fill="#b97b42"><path d="m49 22 18 4-18 5Z"/><path d="m89 32 11 3-11 5Z"/></g><g fill="#49372f"><circle cx="44" cy="21" r="2"/><circle cx="84" cy="32" r="2"/></g></svg>
+<svg class="bee-cloud" viewBox="0 0 160 160" aria-hidden="true"><g stroke="#735a35" stroke-width="2"><g transform="translate(20 35)"><ellipse cy="-6" rx="9" ry="5" fill="#eee9d4"/><ellipse rx="10" ry="6" fill="#d5ae53"/><path d="M-3-5V5m6-10V5"/></g><g transform="translate(140 75)"><ellipse cy="-6" rx="9" ry="5" fill="#eee9d4"/><ellipse rx="10" ry="6" fill="#d5ae53"/><path d="M-3-5V5m6-10V5"/></g><g transform="translate(60 140)"><ellipse cy="-6" rx="9" ry="5" fill="#eee9d4"/><ellipse rx="10" ry="6" fill="#d5ae53"/><path d="M-3-5V5m6-10V5"/></g></g></svg>
+<span class="wanted-tag">PERSON OF INTEREST</span>
+</div>
+<div id="speech" class="speech">“I have a good feeling about doing very little.”</div>
+</div>
+<div class="map-bottom"><span id="stage-caption">Write one goal. Then let the afternoon happen.</span><span id="turn-count">0 / 7</span></div>
+</section>
+<div class="global-alerts"><p id="error" class="error" role="alert" hidden></p><button id="retry" class="ghost" hidden>Recover and continue</button>
+</div>
+<div class="hud" aria-label="Mallow's resources">
+<span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7v10m-3-8h5m-4 6h5"/></svg><b id="coins">3</b> coins</span>
+<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10q-2-6 4-6h8q6 0 4 6v10H4ZM5 13h14"/></svg><b id="food">0</b> food</span>
+<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m13 2-8 12h7l-1 8 8-13h-7Z"/></svg><b id="energy">6</b> / 8 energy</span>
+<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18l-4 11H7ZM4 9 3 4l6 4 3-6 3 6 6-4-1 5"/></svg><b id="fame">0</b> fame</span>
+<span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 21v-3q0-5 6-5t6 5v3m1-7q5 0 5 6"/></svg><b id="friends">0</b> friends</span>
+<span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 10 17H2ZM12 9v5m0 3h.1"/></svg><b id="trouble">0</b> trouble</span>
+</div>
+<section id="ending" class="ending" hidden aria-label="Afternoon results">
+<h2 id="ending-title"></h2><p id="ending-subtitle"></p><span id="verdict" class="verdict"></span>
+<div id="souvenir" class="souvenir"></div><ul id="loose-ends" class="loose-ends"></ul>
+<div class="ending-buttons"><button id="watch-again" class="ghost">Watch this recording</button><button id="same-day" class="primary">Replay this day <span aria-hidden="true">↻</span></button><button id="another-day" class="ghost">Try another day</button><button id="different-goal" class="ghost">Change the goal</button></div>
+<p id="past-run" class="past-run" hidden></p>
+</section>
+</div>
+<aside id="watch-panel" class="watch-panel" aria-label="Live adventure journal">
+<div class="journal-heading"><h2>The afternoon</h2><span id="journal-count">Waiting for ambition</span></div>
+<div id="waiting" class="waiting"><h3>He has a goal.<br>What could go wrong?</h3><p>Set Mallow loose. He will choose his own route, make questionable friends, and deal with the consequences.</p><p>The ducks remember a king. The goblin remembers a debt. Kevin remembers his sandwich.</p><p class="aside-note">One goal starts the whole adventure. No steering required. Change the goal and replay the same day to see what Mallow does differently.</p></div>
+<div id="current-situation" class="current-situation" hidden></div>
+<div id="thinking" class="thinking" hidden><span class="thinking-dot"></span><span id="thinking-text">Mallow is considering his options…</span></div>
+<div id="journal" class="journal" aria-label="Completed decisions"></div>
+<div class="model-state"><span id="model-dot" class="status-dot loading"></span><span id="model-status" role="status">Loading local Laya…</span><button id="retry-model" hidden>Retry model</button></div>
+</aside></div>
+<footer><span>Every choice is made by Laya. Every bad joke is our responsibility.</span><span>A local woodland simulation. No sandwich was actually stolen.</span></footer>
+<p id="announcement" class="sr-only" role="status" aria-live="polite"></p>
+</main><script type="module" src="adventure.js?v=3"></script></body></html>

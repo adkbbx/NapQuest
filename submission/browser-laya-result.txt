@@ -1,0 +1,18 @@
+Browser tab: 28, Title: "NapQuest · Your woodland", URL: "http://127.0.0.1:8788/?defense=5".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 115-122, 125, 127-128, 130-132
++				149 text Mossbrook · Acorn keep
++			150 text Energy 89
++			151 text 34 coins
++			152 text Challenge the Goose Captain
++					153 text Honeybank woods
++					154 text Bell silent · time to sleep
++						155 text Bee Local 404
++					156 text Get 2 honey when you join. Coworkers escort one shift, then return after work or when you go home.
++				157 text 10, 10
++				158 text Saved on this device
++				159 text Coins earned · 10 / 10 · Paused
++					160 text What to do next
++					161 text Challenge the Goose Captain
++				162 text Walls delay the attack. Defenders and towers hold the clearing. Start the final siege when ready.
+The focused UI element is 75 button Let Laya take over, ID: autoplay

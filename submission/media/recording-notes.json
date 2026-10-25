@@ -1,0 +1,15 @@
+{
+  "source": "Actual browser screenshots captured through the UI",
+  "scenario": "Explicitly supplied defense=5 practice world; separate player save",
+  "segments": [
+    {
+      "description": "First 24 seconds after submitting Earn 10 coins",
+      "frames": 71
+    },
+    {
+      "description": "Four-second hold on later actual 10/10 completion screenshot"
+    }
+  ],
+  "editing": "Selected excerpts; silent video; 12 FPS MP4 and 4 FPS GIF; source screenshots are unchanged",
+  "not_claimed": "Uncut real-time recording or an earned level-five village"
+}
