@@ -55,9 +55,9 @@
           <use href="#mushroom" transform="translate(317 497)"/><use href="#mushroom" transform="translate(341 502) scale(.65)"/><use href="#mushroom" transform="translate(668 187) scale(.8)"/>
           <use href="#flower" transform="translate(278 303)"/><use href="#flower" transform="translate(292 310) scale(.6)"/><use href="#flower" transform="translate(750 397)"/><use href="#flower" transform="translate(765 391) scale(.7)"/><use href="#flower" transform="translate(238 444) scale(.7)"/>
           <path d="M0 0h960v600H0Z" fill="url(#paper-grain)" pointer-events="none"/>
-          
-          
-          
+
+
+
           <g class="map-label" fill="#53633d"><text x="183" y="449" text-anchor="middle">HOME, EVENTUALLY</text><text x="796" y="375" text-anchor="middle">THE ROYAL NAP</text></g>
           <g fill="none" stroke="#788860" stroke-width="2" opacity=".55"><path d="m52 571 0-35m-12 15 12-15 12 15"/><circle cx="52" cy="530" r="2" fill="#788860"/></g>
         <g fill="none" stroke="#c9b57f" stroke-width="22" stroke-linecap="round" opacity=".7"><path d="M330 367Q305 290 300 205M330 367Q340 420 365 465M655 330Q710 350 735 440M655 330Q710 250 780 190"/></g>

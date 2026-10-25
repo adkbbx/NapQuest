@@ -36,6 +36,8 @@ The village has five home levels, with a different building at each level. You c
 
 ## Demo
 
+[Watch the MP4 gameplay recording](https://github.com/adkbbx/NapQuest/blob/main/submission/media/laya-gameplay.mp4)
+
 ![Mallow following a real Laya goal to earn ten coins, travelling to the bee workplace and stopping after the goal counter reaches ten](media/laya-gameplay.gif)
 
 *This shows the first 24 seconds of a local Laya run, followed by its later completion. The practice world supplies the starting village. The recording is silent.*
@@ -43,6 +45,8 @@ The village has five home levels, with a different building at each level. You c
 The game currently runs locally with Python and a browser. Once you've downloaded the model, you can run it offline. To try automatic play, open Laya, choose "Earn 10 coins" and select "Let Laya take over." Clicking the map gives control back to you.
 
 ## Code
+
+[Source code on GitHub](https://github.com/adkbbx/NapQuest)
 
 The source package includes the browser game, Python model adapter, setup scripts, tests and the decision records from the runs below. The application code is MIT licensed. The model downloads separately during setup.
 
