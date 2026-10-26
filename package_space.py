@@ -13,21 +13,7 @@ with zipfile.ZipFile(OUT / 'runtime.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
     for name in sources:
         archive.write(ROOT / name, name)
 digest = hashlib.sha256((OUT / 'runtime.zip').read_bytes()).hexdigest()
-bootstrap = '''"""Boot the reviewed, hash-checked game bundle. No remote code download."""
-import hashlib
-import runpy
-import sys
-import zipfile
-from pathlib import Path
-root = Path(__file__).resolve().parent
-bundle = root / 'runtime.zip'
-assert hashlib.sha256(bundle.read_bytes()).hexdigest() == DIGEST, 'Runtime bundle changed'
-destination = root / 'runtime'
-with zipfile.ZipFile(bundle) as archive:
-    archive.extractall(destination)
-sys.path.insert(0, str(destination))
-runpy.run_path(str(destination / 'space_runtime.py'), run_name='__main__')
-'''.replace('DIGEST', repr(digest))
+bootstrap = (ROOT / 'space_app.template.py').read_text().replace('__RUNTIME_SHA256__', digest)
 (OUT / 'space_app.py').write_text(bootstrap)
 shutil.copyfile(ROOT / 'requirements-space.txt', OUT / 'requirements.txt')
 (OUT / 'README.md').write_text('''---

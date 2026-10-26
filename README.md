@@ -1,3 +1,5 @@
+> **Online demo, added October 27 after the Week 3 submission:** [Play NapQuest](https://adkbbx-napquest.hf.space/play/). Manual play works without model calls. Laya uses a shared free GPU and can pause at the guest limit. For unrestricted AI play, run the local version below. Online goals are sent to the server; your village saves in your browser.
+
 # NapQuest: the quiet woods
 
 A playable 2D woodland sandbox starring Mallow, a sloth who would like the village bell to stop. Gather wood, mine stone, forage, plant berry bushes, build cabins and workbenches, trade with Kevin, and repair the river crossing. Accept free honey and three bee coworkers escort one shift, then return after work or when you go home. Steal a picnic and the goose pursues you on the map.
