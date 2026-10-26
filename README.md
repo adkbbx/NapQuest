@@ -62,4 +62,4 @@ Tap a stump to clear it for one wood, or choose **Sit and rest instead**. Cleari
 
 ## Post-submission hosting work
 
-On 26 October 2026, after the Week 3 deadline, public-host support was added separately from the original submitted game. The original submission snapshot is commit `d016d05a86b9077f485b8c35b514673339389202`. See [hosting setup and verification status](HOSTING.md). A public cloud deployment has not been verified yet.
+On 26 October 2026, after the Week 3 deadline, public-host support was added separately from the original submitted game. The original submission snapshot is commit `d016d05a86b9077f485b8c35b514673339389202`. See [hosting setup and verification status](HOSTING.md). The free ZeroGPU deployment is now live. Its manual game and real Laya decisions were verified on October 27; long AI goals can pause at the guest GPU limit.
