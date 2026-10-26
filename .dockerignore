@@ -1,0 +1,9 @@
+.git
+.venv
+.cache
+__pycache__
+submission
+evidence
+node_modules
+.env
+.env.*

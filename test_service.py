@@ -10,7 +10,7 @@ class TestModel:
     def interpret(self,goal):return {'choice':'lunch'}
     def choose(self,*args):raise RuntimeError('Deliberate model failure')
 
-class ServiceTests(unittest.TestCase):
+class ServiceFixture(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.server=ThreadingHTTPServer(('127.0.0.1',0),app.Handler)
@@ -29,6 +29,7 @@ class ServiceTests(unittest.TestCase):
         try:
             with urlopen(request,timeout=5) as response:return response.status,json.load(response)
         except HTTPError as exc:return exc.code,json.load(exc)
+class ServiceTests(ServiceFixture):
     def test_failure_leaves_entire_adventure_unchanged(self):
         _,g=self.request('/api/adventures',{'goal':'Get lunch','seed':41})
         path='/api/adventures/'+g['id']

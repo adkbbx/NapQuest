@@ -11,6 +11,7 @@ import {mountPlayUI} from './play-ui.js';
 import {STRUCTURE_PRICES} from './village-services.js';
 import {GameAudio} from './game-audio.js';
 const gameAudio=new GameAudio();
+let modelHosted=false;
 const defenseLevel=Math.min(MAX_LEVEL,Math.max(0,Number(new URLSearchParams(location.search).get('defense'))||0));
 const $=id=>document.getElementById(id),practice=new URLSearchParams(location.search).get('practice')==='1',storageKey=defenseLevel?`napquest-defense-practice-${defenseLevel}-v1`:practice?'napquest-practice-woodland-v2':'napquest-open-woodland-v1';
 mountVillageUI({visitBuilding(x,y){controls.setPage('map');visitObject(x,y);}});
@@ -212,12 +213,12 @@ function available(){
  }}));
 }
 async function decide(){
- if(!modelReady){stopAI();announce('Local Laya is not ready. You can keep exploring manually.');return;}
+ if(!modelReady){stopAI();announce('Laya is not ready yet. You can keep exploring manually.');return;}
  thinking=true;const generation=aiGeneration;$('ai-choice').textContent=world.project?'Laya is choosing the next action…':'Laya is identifying the main project in your goal…';
  try{
   if(!world.project||world.project.schema!==PROJECT_SCHEMA){const project=await interpretGoal($('goal').value.trim(),'',world);if(!autoplay||generation!==aiGeneration)return;world.project=project;save();}
   const options=available();$('ai-choice').title=options.map(o=>`${o.id}: ${o.intent}`).join('\n');const answer=await askLaya($('goal').value.trim(),options);
-  if(!autoplay||generation!==aiGeneration)return;const chosen=options.find(o=>o.id===answer.choice);if(!chosen)throw Error('Laya returned an unavailable action.');$('ai-choice').textContent=`Laya chose ${chosen.id} · ${answer.elapsed_ms} ms · local model`;
+  if(!autoplay||generation!==aiGeneration)return;const chosen=options.find(o=>o.id===answer.choice);if(!chosen)throw Error('Laya returned an unavailable action.');$('ai-choice').textContent=`Laya chose ${chosen.id} · ${answer.elapsed_ms} ms · ${modelHosted?'online':'local'} model`;
   activePlan=chosen;if(chosen.target){selected={x:chosen.target[0],y:chosen.target[1]};walkTo(...chosen.target,chosen.action);}else chosen.action();autoAt=time+2;
  }catch(error){if(generation!==aiGeneration)return;if(error.status===409){autoAt=time+2;$('ai-choice').textContent='Laya is finishing another decision. Retrying shortly…';return;}stopAI();$('ai-choice').textContent=error.message;announce('Automatic play paused. The woods are still yours.');}finally{if(generation===aiGeneration)thinking=false;}
 }
@@ -252,7 +253,7 @@ document.querySelectorAll('[data-train]').forEach(b=>b.addEventListener('click',
 $('start-raid').addEventListener('click',()=>{stopAI();if(world.near(...world.location('home'),15))result(world.startRaid());else walkTo(...world.location('home'),()=>result(world.startRaid()));});
 $('defend').addEventListener('click',()=>{stopAI();const e=world.raid?.enemies.filter(e=>e.hp>0).sort((a,b)=>Math.hypot(a.x-world.player.x,a.y-world.player.y)-Math.hypot(b.x-world.player.x,b.y-world.player.y))[0];if(!e)return;if(Math.hypot(e.x-world.player.x,e.y-world.player.y)<3)result(world.whistle());else walkTo(e.x,e.y,()=>result(world.whistle()));});
 let resetArmed=false;$('new-world').addEventListener('click',()=>{if(!resetArmed){resetArmed=true;$('new-world').textContent='Confirm new world';return;}resetArmed=false;$('new-world').textContent=defenseLevel?'Reset defense scenario':'New world';stopAI();cancelPlacement();moveHistory=[];save();world=defenseLevel?defensePractice(defenseLevel):new OpenWorld(Math.floor(Math.random()*2147483647));path=[];selected=null;arrival=null;breadcrumbs=[[0,1.7]];camera={x:0,y:0};$('goal').value=world.ambition;actors.get('goose').x=6;actors.get('goose').y=2.6;restHandled=false;restStarted=0;announce(defenseLevel?'Supplied defense scenario reset. Your earned village is unchanged.':'A fresh woodland. The previous bell had excellent job security.');save();updateUI();});
-async function status(){try{const r=await fetch('/api/status'),s=await r.json();modelReady=s.status==='ready';$('model-state').textContent=modelReady?'Laya · running locally':s.status==='error'?'Laya unavailable · manual play works':'Laya is loading · manual play works';}catch{$('model-state').textContent='Local server disconnected';modelReady=false;}}
+async function status(){try{const r=await fetch('/api/status'),s=await r.json();modelReady=s.status==='ready';modelHosted=s.deployment==='hosted';$('model-state').textContent=modelReady?(modelHosted?'Laya · online':'Laya · running locally'):s.status==='error'?'Laya unavailable · manual play works':'Laya is loading · manual play works';$('ai-location').textContent=modelHosted?'Online play sends your goal and available actions to the game server for Laya decisions. Your village saves in this browser.':'Laya runs on your computer. Your village saves in this browser.';}catch{$('model-state').textContent='AI disconnected · manual play works';$('ai-location').textContent='Laya is unavailable. You can keep playing by hand.';modelReady=false;}}
 updateUI();$('dialogue').textContent='Unpacking the woodland…';
 try{await loadArt();}catch{$('dialogue').textContent='Woodland art could not load. Reload this page to try again.';throw Error('Woodland art unavailable');}
 resize();camera={x:world.player.x*TILE,y:world.player.y*TILE};announce(world.flags.quiet?'The bell is quiet. Your woodland is just as you left it.':'A bell rings. A sloth regrets being awake.');updateUI();status();setInterval(status,12000);

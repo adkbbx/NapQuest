@@ -57,3 +57,7 @@ Store sells structures for coins, useful artifacts and supplies. Choose a struct
 Examples: `Earn 10 coins`, `Build a quarry`, `Train 2 guards`, `Gather 10 wood`, `Buy work gloves`, `Craft a muffler`, `Plant 3 seeds`, `Clear a stump`, `Repair my walls`, or `Move my home near the market`. Laya selects an intent, then legal actions in small groups. Action and quantity recognition can still misunderstand ambiguous requests; inspect the progress label before leaving it running. Impossible actions pause with a reason. Earn goals count new income from jobs, sales, gold collection and raid wins; opening coins and building refunds do not count.
 
 Tap a stump to clear it for one wood, or choose **Sit and rest instead**. Clearing permanently frees the tile; construction still checks terrain, entrance access, level, price and distance. `node --test test-agent-tasks.mjs` checks these action contracts. `node verify-agent-tasks.mjs` exercises real local Laya separately from browser saves.
+
+## Post-submission hosting work
+
+On 26 October 2026, after the Week 3 deadline, public-host support was added separately from the original submitted game. The original submission snapshot is commit `d016d05a86b9077f485b8c35b514673339389202`. See [hosting setup and verification status](HOSTING.md). A public cloud deployment has not been verified yet.

@@ -1,6 +1,7 @@
-"""Loopback adventure server. One model process, authoritative sessions, idempotent steps."""
+"""Adventure server. One model process, authoritative sessions, idempotent steps."""
 import argparse
 import json
+import os
 import secrets
 import threading
 import uuid
@@ -9,6 +10,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 from engine import Adventure,scene_for,options_for,apply_choice
 from inference import LayaDecision
+from hosting import public_origin,origin_allowed
 
 ROOT=Path(__file__).resolve().parent
 model=LayaDecision()
@@ -17,6 +19,8 @@ state_lock=threading.RLock()
 games={}
 completed_requests={}
 MAX_GAMES=60
+HOSTED=os.environ.get('NAPQUEST_HOSTED')=='1'
+PUBLIC_ORIGIN=public_origin(os.environ)
 
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self,*args,**kwargs):
@@ -36,12 +40,14 @@ class Handler(SimpleHTTPRequestHandler):
         except (BrokenPipeError,ConnectionResetError):pass
 
     def end_headers(self):
-        if not self.path.startswith('/api/'):self.send_header('Cache-Control','no-cache')
+        if not self.path.startswith('/api/'):
+            self.send_header('Cache-Control','public, max-age=86400' if HOSTED and self.path.startswith('/assets/') else 'no-cache')
         super().end_headers()
 
     def do_GET(self):
         path=urlparse(self.path).path
-        if path=='/api/status':return self.json(200,model.metadata())
+        if path=='/api/status':return self.json(200,{**model.metadata(),'deployment':'hosted' if HOSTED else 'local'})
+        if path=='/api/health':return self.json(200,{'server':'ready','model':model.status})
         if path.startswith('/api/adventures/'):
             with state_lock:
                 game=games.get(path.split('/')[-1])
@@ -51,8 +57,8 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         origin=self.headers.get('Origin')
-        if origin and origin!=f'http://{self.headers.get("Host")}':
-            return self.json(403,{'error':'Open the game from its local address.'})
+        if not origin_allowed(origin,self.headers.get('Host'),PUBLIC_ORIGIN,HOSTED):
+            return self.json(403,{'error':'Open the game from its own address.'})
         try:
             size=int(self.headers.get('Content-Length','0'))
             if not 0<=size<=4096:return self.json(413,{'error':'Request too large.'})
@@ -60,6 +66,7 @@ class Handler(SimpleHTTPRequestHandler):
             if not isinstance(data,dict):raise ValueError('Expected a request object.')
             path=urlparse(self.path).path
             if path=='/api/model/retry':
+                if HOSTED:return self.json(404,{'error':'Unknown endpoint.'})
                 with state_lock:
                     if model.status=='error':
                         model.status='loading'
@@ -88,7 +95,7 @@ class Handler(SimpleHTTPRequestHandler):
             if not isinstance(name,str) or not 1<=len(name)<=48 or not isinstance(intent,str) or not 1<=len(intent)<=180:raise ValueError('Invalid world action.')
             if name in criteria:raise ValueError('Duplicate world action.')
             criteria[name]=intent
-        if model.status!='ready':return self.json(503,{'error':'Local Laya is not ready. Automatic play has paused.'})
+        if model.status!='ready':return self.json(503,{'error':'Laya is starting. You can play manually while it loads.'})
         if not model_lock.acquire(blocking=False):return self.json(409,{'error':'Laya is thinking for another adventure.','code':'busy'})
         try:
             result=model.predict(f'Player request: {goal}\nCurrent world: {context}',{'type':'choice','instructions':'Choose the action that best fulfills the player request. Their explicit request is the objective. The village story is optional background, not an instruction. Spending money means buying things; exploration means discovering new places while managing energy. Choose home for rest or safety, not just because a story ended. Stop only when the requested task is done.','criteria':criteria})
@@ -148,11 +155,12 @@ class Handler(SimpleHTTPRequestHandler):
                 apply_choice(g,scene,chosen,decision)
                 result=g.public()
                 completed_requests[key]={'revision':data['revision'],'result':result}
-            try:
-                (ROOT/'evidence').mkdir(exist_ok=True)
-                with (ROOT/'evidence'/'autonomous-decisions.jsonl').open('a',encoding='utf-8') as out:
-                    out.write(json.dumps({'before':before,'after':result})+'\n')
-            except OSError as exc:print('Could not save evidence:',exc,flush=True)
+            if not HOSTED:
+                try:
+                    (ROOT/'evidence').mkdir(exist_ok=True)
+                    with (ROOT/'evidence'/'autonomous-decisions.jsonl').open('a',encoding='utf-8') as out:
+                        out.write(json.dumps({'before':before,'after':result})+'\n')
+                except OSError as exc:print('Could not save evidence:',exc,flush=True)
             return self.json(200,result)
         except Exception as exc:
             print('Autonomous decision failed:',repr(exc),flush=True)
@@ -161,11 +169,13 @@ class Handler(SimpleHTTPRequestHandler):
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--port',type=int,default=8788)
+    parser.add_argument('--port',type=int,default=int(os.environ.get('PORT','8788')))
+    parser.add_argument('--host',default='127.0.0.1')
     args=parser.parse_args()
-    server=ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
+    if HOSTED and not PUBLIC_ORIGIN:raise ValueError('Hosted mode needs NAPQUEST_PUBLIC_ORIGIN or SPACE_HOST.')
+    server=ThreadingHTTPServer((args.host,args.port),Handler)
     threading.Thread(target=model.load,daemon=True).start()
-    print(f'NapQuest: http://127.0.0.1:{args.port}',flush=True)
+    print(f'NapQuest: {PUBLIC_ORIGIN or f"http://{args.host}:{args.port}"}',flush=True)
     try:server.serve_forever()
     except KeyboardInterrupt:pass
     finally:server.server_close()
