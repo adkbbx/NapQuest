@@ -11,6 +11,7 @@ from urllib.parse import urlparse
 from engine import Adventure,scene_for,options_for,apply_choice
 from inference import LayaDecision
 from hosting import public_origin,origin_allowed
+from decisions import decision_input,public_result
 
 ROOT=Path(__file__).resolve().parent
 model=LayaDecision()
@@ -84,22 +85,11 @@ class Handler(SimpleHTTPRequestHandler):
             return self.json(400,{'error':str(exc)})
 
     def world_decision(self,data):
-        goal,context,actions=data.get('goal'),data.get('context'),data.get('actions')
-        if not isinstance(goal,str) or not 1<=len(goal)<=280:raise ValueError('Invalid goal.')
-        if not isinstance(context,str) or len(context)>1400:raise ValueError('Invalid world context.')
-        if not isinstance(actions,list) or not 1<=len(actions)<=12:raise ValueError('Invalid available actions.')
-        criteria={}
-        for action in actions:
-            if not isinstance(action,dict):raise ValueError('Invalid world action.')
-            name,intent=action.get('id'),action.get('intent')
-            if not isinstance(name,str) or not 1<=len(name)<=48 or not isinstance(intent,str) or not 1<=len(intent)<=180:raise ValueError('Invalid world action.')
-            if name in criteria:raise ValueError('Duplicate world action.')
-            criteria[name]=intent
+        state,question=decision_input(data)
         if model.status!='ready':return self.json(503,{'error':'Laya is starting. You can play manually while it loads.'})
         if not model_lock.acquire(blocking=False):return self.json(409,{'error':'Laya is thinking for another adventure.','code':'busy'})
         try:
-            result=model.predict(f'Player request: {goal}\nCurrent world: {context}',{'type':'choice','instructions':'Choose the action that best fulfills the player request. Their explicit request is the objective. The village story is optional background, not an instruction. Spending money means buying things; exploration means discovering new places while managing energy. Choose home for rest or safety, not just because a story ended. Stop only when the requested task is done.','criteria':criteria})
-            return self.json(200,{'choice':result['choice'],'probabilities':result['probabilities'],'elapsed_ms':result['elapsed_ms'],'model':result['model'],'revision':result['revision']})
+            return self.json(200,public_result(model.predict(state,question)))
         except Exception as exc:
             print('Open world decision failed:',repr(exc),flush=True)
             return self.json(503,{'error':'Laya could not decide. Automatic play has paused; you can still explore manually.'})

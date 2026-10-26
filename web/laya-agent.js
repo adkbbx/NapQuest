@@ -1,3 +1,4 @@
+import {requestDecision} from './decision-transport.js';
 import {MAX_LEVEL} from './progression.js';
 import {PROJECTS,projectActions} from './world-actions.js';
 import {BUILDINGS,TROOPS} from './progression.js';
@@ -5,8 +6,8 @@ import {GOODS} from './village-services.js';
 import {activateProject} from './agent-tasks.js';
 export const PROJECT_SCHEMA=4;
 export async function askLaya(goal,actions,base=''){
- const response=await fetch(`${base}/api/world/decide`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({goal,context:'',actions:actions.map(({id,intent})=>({id,intent}))}),signal:AbortSignal.timeout(30000)}),answer=await response.json();
- if(!response.ok)throw Object.assign(Error(answer.error||'Local Laya decision unavailable.'),{status:response.status});if(!actions.some(a=>a.id===answer.choice))throw Error('Laya returned an unavailable action.');return answer;
+ const answer=await requestDecision({goal,context:'',actions:actions.map(({id,intent})=>({id,intent}))},base);
+ if(!actions.some(a=>a.id===answer.choice))throw Error('Laya returned an unavailable action.');return answer;
 }
 export async function interpretGoal(goal,base='',world=null){
  const choose=async (options,question='',request=goal)=>(await askLaya(question?`${request.slice(0,279-question.length)}\n${question}`:request,options.map(([id,intent])=>({id,intent})),base)).choice;

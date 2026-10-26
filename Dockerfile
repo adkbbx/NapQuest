@@ -13,7 +13,7 @@ COPY requirements.txt ./
 RUN pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu \
     && pip install -r requirements.txt
 
-COPY --chown=user:user app.py hosting.py inference.py engine.py ./
+COPY --chown=user:user app.py hosting.py decisions.py inference.py engine.py ./
 COPY --chown=user:user web ./web
 RUN chown user:user /home/user/app
 USER user

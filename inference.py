@@ -12,7 +12,8 @@ MODEL='convaiinnovations/laya'
 REVISION='7b928d828b7b0e022f929d9bd2e44165aa270148'
 
 class LayaDecision:
-    def __init__(self):
+    def __init__(self,device='cpu'):
+        self.device=device
         self.router=None;self.status='loading';self.error='';self.load_ms=None
 
     def load(self):
@@ -22,7 +23,7 @@ class LayaDecision:
             import torch
             from laya import Router
             torch.set_num_threads(min(4,os.cpu_count() or 1))
-            router=Router(device='cpu',default='english',revision=REVISION)
+            router=Router(device=self.device,default='english',revision=REVISION)
             router.load('english')
             self.router=router
             self.load_ms=round((time.perf_counter()-start)*1000)
@@ -33,7 +34,7 @@ class LayaDecision:
 
     def metadata(self):
         return {'status':self.status,'error':self.error,'model':MODEL,'revision':REVISION,
-                'device':'cpu','load_ms':self.load_ms,'offline':os.environ.get('HF_HUB_OFFLINE')=='1'}
+                'device':self.device,'load_ms':self.load_ms,'offline':os.environ.get('HF_HUB_OFFLINE')=='1'}
 
     def predict(self,state,question):
         if self.status!='ready':
@@ -51,7 +52,7 @@ class LayaDecision:
             raise ValueError('Laya returned incomplete scores.')
         return {'choice':answer['choice'],'probabilities':probabilities,
                 'elapsed_ms':round((time.perf_counter()-start)*1000),'model':MODEL,
-                'revision':REVISION,'device':'cpu','input':state,'question':question,'usage':usage}
+                'revision':REVISION,'device':self.device,'input':state,'question':question,'usage':usage}
 
     def interpret(self,goal):
         return self.predict(goal,{'type':'choice','instructions':"What is the main ambition in this player's goal?",
