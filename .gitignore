@@ -7,3 +7,8 @@ submission/.tools/
 submission/frames/
 submission/*.zip
 submission/release-manifest.json
+
+submission/publish/
+submission/public-link-checks.json
+submission/draft-preview.png
+submission/published-node-tests.txt
