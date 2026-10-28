@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>NapQuest · Your woodland</title><link rel="icon" href="assets/mallow.png"><link rel="stylesheet" href="explore.css?v=4"><link rel="stylesheet" href="play-ui.css?v=4"></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>NapQuest · Your woodland</title><link rel="icon" href="assets/mallow.png"><link rel="stylesheet" href="explore.css?v=4"><link rel="stylesheet" href="play-ui.css?v=6"></head>
 <body data-page="map">
-<header class="topbar"><a class="brand" href="./">NapQuest<span>Your woodland</span></a><div class="top-actions"><button id="mute-all" aria-pressed="false">Mute</button><button id="open-settings">Settings</button></div></header>
+<header class="topbar"><a class="brand" href="./">NapQuest<span>Your woodland</span></a><div class="top-actions"><button id="mute-all" aria-pressed="false">Mute</button><button id="fullscreen-toggle" aria-pressed="false">Full screen</button><button id="open-settings">Settings</button></div></header>
+<a id="fullscreen-fallback" hidden target="_blank" rel="noopener"></a>
 <main class="game-layout">
 <section class="world-column" aria-label="Game world">
  <div class="chapter-line"><div><span id="chapter"></span><h1 id="quest-title">Mossbrook</h1></div><span id="energy">Energy 100</span><span id="hud-coins">3 coins</span></div>
@@ -11,19 +12,23 @@
   <canvas id="terrain"></canvas><div id="cast" aria-hidden="true"></div><canvas id="foreground"></canvas><div id="map-markers" aria-hidden="true"></div>
   <div class="map-status"><span id="location">Mossbrook village</span><span id="bell-state">The bell is ringing</span></div>
   <button id="go-home" class="go-home">Go home</button><div class="zoom-controls" aria-label="Map zoom"><button id="zoom-out" aria-label="Zoom out">Wider</button><button id="zoom-in" aria-label="Zoom in">Closer</button></div>
-  <div id="action-progress" class="action-progress" hidden><span id="action-progress-text"></span><progress id="action-meter" max="1" value="0"></progress></div>
-  <div id="level-toast" class="level-toast" role="status" hidden></div><div id="dialogue" class="dialogue" role="status">Mallow needs a quiet bed. The bell has other plans.</div>
+
+
   <div id="placement-toolbar" hidden><strong id="placement-label"></strong><button id="confirm-placement">Place here</button><button id="cancel-placement">Cancel</button></div>
   <div id="resource-pop" class="resource-pop" aria-hidden="true"></div>
   <div id="mobile-pad" class="mobile-pad" aria-label="Movement controls"><button data-direction="up" aria-label="Move north">↑</button><div><button data-direction="left" aria-label="Move west">←</button><button data-direction="down" aria-label="Move south">↓</button><button data-direction="right" aria-label="Move east">→</button></div></div>
 
- <section class="interaction-panel" aria-label="Selected object"><div><h2 id="target-name">Choose an object</h2><p id="target-detail">Select a tree, rock, building, or neighbor to see what you can do.</p></div><button id="interact" disabled>Select an object</button><div id="target-actions" class="target-actions"></div></section>
+
   <section id="home-scene" class="home-scene" aria-label="Inside Mallow's home" hidden>
    <img src="assets/mallow-bedroom.png" alt="Mallow asleep in his bed inside the hollow tree, under a leaf blanket, with his bag hanging from the bedpost.">
    <div class="home-heading"><span>Inside Mallow's hollow</span><h2 id="rest-title">Getting comfortable…</h2></div>
    <div class="home-footer"><p id="rest-description">Mallow has put down his bag and curled up in bed.</p><button id="wake">Wake up & go outside</button></div>
   </section>
  </div>
+ <div class="activity-bar"><span id="activity-state" role="status" aria-live="polite">Ready · manual play</span><button id="activity-control">Give Laya a goal</button></div>
+  <div id="action-progress" class="action-progress" hidden><span id="action-progress-text"></span><progress id="action-meter" max="1" value="0"></progress></div>
+ <section class="interaction-panel" aria-label="Selected object"><div><h2 id="target-name">Choose an object</h2></div><button id="interact" disabled>Select an object</button><details class="interaction-details"><summary>Details &amp; more actions</summary><p id="target-detail">Select a tree, rock, building, or neighbor to see what you can do.</p><div id="target-actions" class="target-actions"></div></details></section>
+ <div class="notice-line"><div id="level-toast" class="level-toast" role="status" hidden></div><div id="dialogue" class="dialogue" role="status">Mallow needs a quiet bed. The bell has other plans.</div></div>
  <div class="status-strip"><span id="coordinates"></span><span id="model-state"></span><span id="save-state"></span></div>
 </section>
 <aside id="play-panel" aria-label="Game controls" hidden>
@@ -45,4 +50,4 @@
  </div>
 </aside></main>
 <nav class="game-nav" aria-label="Game navigation"><button data-page-link="map" aria-current="page">Map</button><button data-page-link="store">Store</button><button data-page-link="village">Village</button><button data-page-link="laya">Laya</button><button data-page-link="bag">Bag</button><button data-page-link="settings">Settings</button></nav>
-<script type="module" src="explore.js?v=4"></script></body></html>
+<script type="module" src="explore.js?v=6"></script></body></html>

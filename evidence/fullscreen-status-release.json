@@ -1,0 +1,12 @@
+{
+  "commit": "5f237d76d38ec9da811e2ffcaa72d793e40cd1fc",
+  "runtime": "5f237d76d38ec9da811e2ffcaa72d793e40cd1fc",
+  "tests_passed": 61,
+  "live_files": {
+    "activity-status.js": true,
+    "fullscreen.js": true,
+    "play-ui.css": true,
+    "index.html": true,
+    "explore.js": true
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "project": "bridge",
+  "bridge": true,
+  "complete": true,
+  "trace": [
+    {
+      "action": "gather_wood",
+      "ok": true,
+      "text": "2 wood gathered. Higher home levels improve your tools."
+    },
+    {
+      "action": "gather_wood",
+      "ok": true,
+      "text": "2 wood gathered. Higher home levels improve your tools."
+    },
+    {
+      "action": "gather_stone",
+      "ok": true,
+      "text": "2 stone mined. Higher home levels improve your tools."
+    },
+    {
+      "action": "repair_bridge",
+      "ok": true,
+      "text": "The crossing is repaired. The bees have noticed a potential employee."
+    }
+  ]
+}

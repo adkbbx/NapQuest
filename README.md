@@ -21,7 +21,7 @@ The model is [convaiinnovations/laya](https://huggingface.co/convaiinnovations/l
 ## Verify
 
 ```powershell
-node --test test-open-world.mjs test-interactions.mjs test-settlement.mjs test-rig.mjs test-world.mjs test-progression.mjs test-play-ux.mjs test-agent-tasks.mjs
+node --test test-open-world.mjs test-interactions.mjs test-settlement.mjs test-rig.mjs test-world.mjs test-progression.mjs test-play-ux.mjs test-agent-tasks.mjs test-reported-bugs.mjs test-bridge-goal.mjs test-activity-fullscreen.mjs
 node --check web/explore.js
 ./.venv/Scripts/python.exe -m unittest test_engine.py test_service.py
 ```
@@ -32,7 +32,7 @@ The [original seven-decision adventure](http://127.0.0.1:8788/storybook.html) re
 
 ## Audio
 
-ElevenLabs Sound Effects v3 generated 21 recordings: a 20-second forest loop plus footsteps, chopping, mining, geese, bees, door, coins, cloth, reward, bell, construction, cannons, slingshots, shield impacts, wall impacts and collapse, troop readiness, resource collection, boars and eating. These are local MP3 assets, not runtime paid API calls. A first click unlocks browser audio. Effects and ambience toggle separately and mute when the page is hidden. The manifest in `web/assets/audio/manifest.json` records prompt summaries and durations. Public Explore sharing was disabled during generation. Procedural fallback covers unavailable recordings and the whistle.
+ElevenLabs Sound Effects v3 generated 21 recordings: a 20-second forest loop plus footsteps, chopping, mining, geese, bees, door, coins, cloth, reward, bell, construction, cannons, slingshots, shield impacts, wall impacts and collapse, troop readiness, resource collection, boars and eating. These are local MP3 assets, not runtime paid API calls. Each session starts muted; choose Unmute to hear audio. Effects and ambience toggle separately and mute when the page is hidden. The manifest in `web/assets/audio/manifest.json` records prompt summaries and durations. Public Explore sharing was disabled during generation. Procedural fallback covers unavailable recordings and the whistle.
 
 `node verify-world-goals.mjs` checks real local Laya spending, exploration, upgrade and low-energy choices. `node verify-home-project.mjs` replays a fresh world through home level 5 with real Laya decisions and no resource grants. It writes `evidence/home-project-five-level-replay.json`; the current recorded run reached level 5 after 40 world actions. This replay uses domain movement and rest transitions, not browser animations.
 
@@ -46,7 +46,7 @@ Choose an unlocked building, select nearby empty ground, then confirm **Place he
 
 ## Map controls, store and settings
 
-**Mute / Unmute** is always in the top bar and remembers its state. Settings also separates effects and ambience. The game uses the viewport height, with bottom navigation on phones and scrollable panels rather than a long page.
+**Mute / Unmute** is always in the top bar. Each session starts muted; effects and ambience preferences are remembered. Settings also separates effects and ambience. The game uses the viewport height, with bottom navigation on phones and scrollable panels rather than a long page.
 
 Store sells structures for coins, useful artifacts and supplies. Choose a structure, select nearby empty ground, then confirm its preview; coins are charged only on successful placement. Material crafting is still available under the Store's material recipes. Work gloves add one wood or stone per gathering action. The trail compass finds nearby resources from Bag. Owned artifacts persist and cannot be purchased twice.
 
@@ -63,3 +63,13 @@ Tap a stump to clear it for one wood, or choose **Sit and rest instead**. Cleari
 ## Post-submission hosting work
 
 On 26 October 2026, after the Week 3 deadline, public-host support was added separately from the original submitted game. The original submission snapshot is commit `d016d05a86b9077f485b8c35b514673339389202`. See [hosting setup and verification status](HOSTING.md). The free ZeroGPU deployment is now live. Its manual game and real Laya decisions were verified on October 27; long AI goals can pause at the guest GPU limit.
+
+## Latest playability updates
+
+The hosted game includes fullscreen entry and exit, compact notices and controls below the map, and a persistent Laya activity line. Completed goals stay visible with a New goal button. Sound starts muted each session.
+
+Bridge repair is a dedicated goal: gather 4 wood and 2 stone, repair the crossing, then stop. The crossing has its own sign instead of a stump sprite. Bee escorts expire after 30 seconds and do not restart on repeat honey collection after a completed shift.
+
+Hosted decisions time out after 30 seconds; taking control cancels queued requests. Free GPU quota errors pause automatic play, while manual play remains available.
+
+The current gameplay suite passes 61 tests. `evidence/bridge-goal-real-laya.json` records a complete local Laya bridge run; `evidence/fullscreen-status-release.json` records verification against the deployed Hugging Face files. To repeat the real-model check, start `python app.py --port 8792`, wait for model readiness, and run `node verify-bridge-goal.mjs`.

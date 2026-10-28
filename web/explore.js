@@ -1,3 +1,5 @@
+import {activityStatus} from './activity-status.js';
+import {mountFullscreen} from './fullscreen.js';
 import {configureDecisionTransport} from './decision-transport.js';
 import {OpenWorld,TILE,VERSION,WALK_COST,buildings,hash,findPath} from './open-world-model.js';
 import {CutoutRig} from './rig.js';
@@ -5,13 +7,14 @@ import {describeInteraction,nextObjective,villageObjective,RESOURCE_USES} from '
 import {projectActions} from './world-actions.js';
 import {MAX_LEVEL,LEVELS,BUILDINGS,TROOPS,ENEMIES,tierFor,buildPermission,costText} from './progression.js';
 import {mountVillageUI,refreshVillageUI} from './village-ui.js';
-import {TASK_KINDS,applyTaskAction,taskSummary} from './agent-tasks.js';
+import {TASK_KINDS,applyTaskAction,taskSummary,taskComplete} from './agent-tasks.js';
 import {PROJECT_SCHEMA,askLaya,interpretGoal} from './laya-agent.js';
 import {defensePractice} from './defense-practice.js';
 import {mountPlayUI} from './play-ui.js';
 import {STRUCTURE_PRICES} from './village-services.js';
 import {GameAudio} from './game-audio.js';
 const gameAudio=new GameAudio();
+mountFullscreen(document,document.getElementById('fullscreen-toggle'));
 let modelHosted=false;
 const defenseLevel=Math.min(MAX_LEVEL,Math.max(0,Number(new URLSearchParams(location.search).get('defense'))||0));
 const $=id=>document.getElementById(id),practice=new URLSearchParams(location.search).get('practice')==='1',storageKey=defenseLevel?`napquest-defense-practice-${defenseLevel}-v1`:practice?'napquest-practice-woodland-v2':'napquest-open-woodland-v1';
@@ -19,9 +22,10 @@ mountVillageUI({visitBuilding(x,y){controls.setPage('map');visitObject(x,y);}});
 if(practice){document.querySelector('.brand span').textContent='Practice story · separate save';$('practice-link').textContent='Return to your main woodland';$('practice-link').href='./';}
 if(defenseLevel){document.querySelector('.brand span').textContent=`Defense practice · level ${defenseLevel}`;$('new-world').textContent='Reset defense scenario';$('practice-link').textContent='Return to your earned village';$('practice-link').href='./';const note=document.createElement('p');note.className='practice-notice';note.textContent='Supplied defense scenario: a prebuilt village, defenders and materials. Separate from your earned progress.';document.querySelector('.world-column').prepend(note);}
 let saved=null;try{saved=JSON.parse(localStorage.getItem(storageKey)||'null');}catch{}
-let aiGeneration=0,targetActionsSignature='';
+let decisionStarted=0,aiGeneration=0,targetActionsSignature='';
 let world=saved?new OpenWorld(saved.seed,saved):defenseLevel?defensePractice(defenseLevel):new OpenWorld(41),zoom=matchMedia('(max-width: 600px)').matches?.55:.8,keys=new Set(),path=[],arrival=null,selected=null,buildMode=null,autoplay=false,thinking=false,pose='idle',poseUntil=0,last=performance.now(),time=0,stepBudget=0,saveAt=0,autoAt=0,modelReady=false;
 autoplay=world.autorun;$('goal').value=world.ambition;$('autoplay').textContent=autoplay?'Take control':'Let Laya take over';
+let runState=world.project?.runState||'idle',runDetail=world.project?.runDetail||'';
 let lastSaved=JSON.stringify(world.serialize());
 let task=null,restStarted=0,restHandled=false,bellPulse=0,bellAt=8,feedbackUntil=0,shownInventory={...world.inventory},wildlifeSoundAt=0;
 let activePlan=null,placement=null,shots=[],levelNoticeUntil=0,paymentMode='materials',editing=false,editSource=null,editFocus=null,moveHistory=[],placementMemo=null,noticeUntil=0,inventorySignature='';
@@ -36,7 +40,7 @@ function cancelPlacement(){editing=false;editSource=null;editFocus=null;buildMod
 function undoMove(){const move=moveHistory.at(-1);if(!move)return;const r=world.moveObject(move.to,move.from);if(r.ok){moveHistory.pop();editFocus=[...move.from];selected={x:move.from[0],y:move.from[1]};}result(r);}
 function visitObject(x,y,action=null){if(world.player.sleeping)return;stopAI();selected={x,y};walkTo(x,y,()=>{const o=world.tile(x,y).object;if(!o)return;if(action){performInteraction(x,y,action);}else if(o.kind==='market'){controls.openStore('supplies');announce('Kevin’s store is open. Choose what to buy.');}else if(o.kind==='barracks'){controls.setPage('village');announce('Choose a defender to train.');}else if(o.kind==='bench')performInteraction(x,y);else if(controls.preferences.tapActions&&(['tree','apple','rock','bush','mushroom','stump','home'].includes(o.kind)||BUILDINGS[o.kind]?.production||o.kind==='bell'&&world.inventory.muffler))performInteraction(x,y);else{announce(describeInteraction(world,o).detail);updateUI();}});updateUI();}
 
-const definitions={tree:['a',0,120,149],apple:['a',1,112,128],rock:['a',2,91,73],market:['a',3,155,153],bridge:['a',4,100,211],stump:['a',5,66,50],home:['b',0,158,160],office:['b',1,156,146],bench:['b',2,110,89],mushroom:['b',3,48,42],bush:['b',4,75,68],hive:['b',5,74,111],bell:['c',0,73,118],picnic:['c',1,60,51],sapling:['c',2,33,48],muffler:['c',3,45,33],camp:['c',4,65,59],lantern:['c',5,55,102],project:['a',5,60,46],garden:['d',0,108,82],tower:['d',1,108,150],wall:['d',2,88,64],home2:['d',3,175,177],home3:['d',4,195,202],shed:['d',5,110,95]};
+const definitions={tree:['a',0,120,149],apple:['a',1,112,128],rock:['a',2,91,73],market:['a',3,155,153],bridge:['a',4,100,211],stump:['a',5,66,50],home:['b',0,158,160],office:['b',1,156,146],bench:['b',2,110,89],mushroom:['b',3,48,42],bush:['b',4,75,68],hive:['b',5,74,111],bell:['c',0,73,118],picnic:['c',1,60,51],sapling:['c',2,33,48],muffler:['c',3,45,33],camp:['c',4,65,59],lantern:['c',5,55,102],project:['marker',0,64,64],garden:['d',0,108,82],tower:['d',1,108,150],wall:['d',2,88,64],home2:['d',3,175,177],home3:['d',4,195,202],shed:['d',5,110,95]};
 for(const [i,tier] of LEVELS.entries())definitions[tier.home]=['f',i,...tier.size];definitions.crest=['f',5,65,80];
 Object.assign(definitions,{lumbermill:['g',0,125,115],quarry:['g',1,125,110],goldmine:['g',2,125,115],barracks:['g',3,140,140],cannon:['g',4,98,92],gate:['g',5,94,110],guard:['h',0,68,82],ranger:['h',1,64,74],boar:['h',2,80,82],bandit:['h',3,73,88],captain:['h',4,98,110]});
 definitions.wall=['d',2,68,64];
@@ -52,6 +56,7 @@ async function loadArt(){
    rc.putImageData(pixels,0,0);art[kind]={image:raw,box:[x0,y0,x1-x0+1,y1-y0+1]};
   }
  }));
+ const crossing=new Image();crossing.src='assets/crossing-marker.svg';await crossing.decode();art.project={image:crossing,box:[0,0,64,64]};
 }
 const actors=new Map();
 function addActor(id,kind,x,y,size,name=''){
@@ -123,7 +128,7 @@ function render(){
  viewport.dataset.homeLevel=String(world.settlement.level);viewport.dataset.raid=world.raid?.status||'none';
 }
 function nearest(){if(selected&&world.tile(selected.x,selected.y).object)return {...world.tile(selected.x,selected.y).object,x:selected.x,y:selected.y};return world.objectsNear(world.player.x,world.player.y,2).filter(o=>world.near(o.x,o.y)).sort((a,b)=>Math.hypot(a.x-world.player.x,a.y-world.player.y)-Math.hypot(b.x-world.player.x,b.y-world.player.y))[0]||null;}
-function announce(text,mode='idle'){if(!text)return;noticeUntil=time+5;$('dialogue').hidden=false;$('dialogue').textContent=text;pose=mode;poseUntil=time+(mode==='nap'?4:1.6);}
+function announce(text,mode='idle'){if(!text)return;noticeUntil=time+5;$('dialogue').hidden=false;$('dialogue').textContent=text;$('dialogue').title=text;pose=mode;poseUntil=time+(mode==='nap'?4:1.6);}
 function result(r){if(!r)return;if(r.ok&&r.sound)gameAudio.play(r.sound);if(r.levelUp){levelNoticeUntil=time+5;const tier=tierFor(r.levelUp);$('level-toast').textContent=`Level ${r.levelUp} · ${tier.name}. ${tier.promise}`;}if(r.raidStart)gameAudio.play('honk');if(r.ok&&r.text){if(r.text.startsWith('SHOO!'))gameAudio.play('whistle');else if(r.text.startsWith('Goose raid'))gameAudio.play('honk');else if(r.text.startsWith('Home upgraded'))gameAudio.play('upgrade');}announce(r.text,r.pose||'idle');const changes=Object.entries(world.inventory).filter(([k,v])=>v!==shownInventory[k]).map(([k,v])=>`${v-shownInventory[k]>0?'+':''}${v-shownInventory[k]} ${k}`);if(changes.length){$('resource-pop').textContent=changes.join(' · ');feedbackUntil=time+2.4;}if(r.menu==='craft'){$('craft-panel').hidden=false;controls.openStore('supplies');$('recipes-disclosure').open=true;}if(r.rest){restStarted=time;restHandled=false;}save();updateUI();return r.ok;}
 function queueAction(label,duration,apply,entry=null,fx='build'){if(world.player.sleeping)return;task={label,duration:Math.max(.05,duration),elapsed:0,apply,entry,fx,soundAt:.5};gameAudio.play(fx);path=[];arrival=null;announce(label,entry?'idle':'work');poseUntil=time+duration+.4;updateUI();}
 function performInteraction(x,y,action='use',option=null){if(!world.near(x,y))return result({ok:false,text:'Walk closer first. Select the object to walk over.'});const o=world.tile(x,y).object;if(!o)return;const info=describeInteraction(world,o);const apply=()=>{const r=world.interact(x,y,action);if(r.ok&&option?.completes&&world.project)world.project.completed=true;return r;};if(!info.duration)return result(apply());const fx={tree:'chop',apple:'chop',rock:'mine',home:'door',market:'coin',office:'bees',hive:'bees',quarry:'cloth',goldmine:'cloth',lumbermill:'cloth',bell:'cloth',picnic:'honk',stump:'chop'}[o.kind]||'build';queueAction(o.kind==='home'?'Going through the front door…':action==='sit'?'Sitting down to rest…':`${info.label}…`,info.duration,apply,o.kind==='home'?[x,y]:null,fx);}
@@ -134,7 +139,8 @@ function validPlacement(){
  const [x,y]=placement;let result;if(editSource)result=world.placementPermission(world.tile(...editSource).object?.kind,x,y,{moving:editSource});else if(buildMode==='plant'){const t=world.tile(x,y);result={ok:world.near(x,y,2.5)&&!t.object&&t.terrain==='grass'&&world.inventory.seeds>0,text:'A seed needs empty grass nearby.'};}else result=world.placementPermission(buildMode,x,y,{payment:paymentMode});placementMemo={signature,result};return result.ok;
 }
 
-function stopAI(){autoplay=false;world.autorun=false;thinking=false;aiGeneration++;path=[];arrival=null;task=null;activePlan=null;autoAt=time+1;$('autoplay').textContent='Let Laya take over';}
+let decisionController=null;
+function stopAI(outcome='paused',detail=''){if(autoplay){runState=outcome;runDetail=detail;}if(autoplay&&world.project){world.project.runState=outcome;world.project.runDetail=detail;}decisionController?.abort();decisionController=null;autoplay=false;world.autorun=false;thinking=false;aiGeneration++;path=[];arrival=null;task=null;activePlan=null;autoAt=time+1;$('autoplay').textContent='Let Laya take over';}
 function walkTo(x,y,callback=null){if(world.player.sleeping)return;const home=world.tile(x,y).object?.kind==='home',goal=home&&world.walkable(x,y+1)?[x,y+1]:[x,y];path=findPath(world,[world.player.x,world.player.y],goal);arrival=callback;if(!path.length){if(world.near(x,y,1.8)&&callback){arrival=null;callback();}else if(Math.hypot(x-world.player.x,y-world.player.y)>1.5)announce('No route to that stop yet. Repair the crossing, or move closer and try again.');}}
 function canStand(x,y){return [[-.17,-.17],[.17,-.17],[-.17,.17],[.17,.17]].every(([dx,dy])=>world.walkable(x+dx,y+dy));}
 function move(dx,dy,dt){const speed=world.player.energy>10?2.55:1.65,amount=speed*dt;const x=world.player.x+dx*amount,y=world.player.y+dy*amount;let moved=false;if(canStand(x,world.player.y)){world.player.x=x;moved|=!!dx;}if(canStand(world.player.x,y)){world.player.y=y;moved|=!!dy;}if(moved){world.player.energy=Math.max(0,world.player.energy-amount*WALK_COST);world.recordTravel(amount);stepBudget+=amount;while(stepBudget>.5){stepBudget-=.5;breadcrumbs.push([world.player.x,world.player.y]);gameAudio.play('step');if(breadcrumbs.length>100)breadcrumbs.shift();}}return moved?speed:0;}
@@ -170,7 +176,12 @@ function updateUI(force=true){if(!force&&time<uiAt)return;uiAt=time+.2;
  const stepsSignature=guidance.steps.map(s=>s[1]).join();if($('quest-steps').dataset.state!==stepsSignature){$('quest-steps').dataset.state=stepsSignature;$('quest-steps').replaceChildren();for(const [label,done] of guidance.steps){const li=document.createElement('li');li.textContent=`${done?'Done · ':''}${label}`;li.className=done?'done':'';$('quest-steps').append(li);}}
  $('bell-state').textContent=world.flags.quiet?'Bell silent · time to sleep':bellPulse>0?'DING! The bell is ringing':'Bell rings every 8 seconds';$('bell-state').classList.toggle('ringing',bellPulse>0&&!world.flags.quiet);
  $('energy').textContent=`Energy ${Math.round(world.player.energy)}`;$('coordinates').textContent=`${Math.round(world.player.x)}, ${Math.round(world.player.y)}`;$('coordinates').title=`World seed ${world.seed}`;$('chunks').textContent=`${world.chunks.size} regions generated`;$('location').textContent=world.player.y<5?'Mossbrook village':world.player.y<8?'The crossing':world.player.y<18?'Honeybank woods':'The farther woods';
- document.querySelector('.interaction-panel').hidden=!selected||editing||!!buildMode||!!world.player.shelter;$('target-name').textContent=info.title;$('target-detail').textContent=path.length&&o&&!inReach?`Walking to ${info.title.toLowerCase()}. ${info.detail}`:info.detail;$('interact').textContent=task?'Working…':info.label;$('interact').disabled=!o||!inReach||!!task||world.player.sleeping;
+ document.querySelector('.interaction-panel').hidden=!selected||editing||!!buildMode||!!world.player.shelter||autoplay||!!task;$('target-name').textContent=info.title;$('target-detail').textContent=path.length&&o&&!inReach?`Walking to ${info.title.toLowerCase()}. ${info.detail}`:info.detail;$('interact').textContent=task?'Working…':info.label;$('interact').disabled=!o||!inReach||!!task||world.player.sleeping;
+ const finished=world.project&&(world.project.runState==='complete'||TASK_KINDS.has(world.project.kind)&&taskComplete(world,world.project));
+ const activity=activityStatus({autoplay,thinking,walking:!!path.length,task:task?.label,sleeping:world.player.sleeping,finished,state:runState,detail:runDetail,elapsed:time-decisionStarted});
+ $('activity-state').textContent=activity.text;$('activity-state').title=activity.detail||activity.text;$('activity-state').dataset.state=activity.state;
+ $('activity-control').textContent=autoplay?'Take control':finished?'New goal':'Give Laya a goal';
+ if(finished||world.project?.runState==='error'||world.project?.runState==='blocked')$('project-status').textContent=activity.text+(world.project?' · '+world.project.goal:'');
  $('action-progress').hidden=!task;if(task){$('action-progress-text').textContent=task.label;$('action-meter').value=task.elapsed/task.duration;}
  $('home-scene').hidden=!world.player.shelter;const protectedSleep=world.canSleepQuietly();$('rest-title').textContent=restHandled&&protectedSleep?'Finally. A proper nap.':protectedSleep?'Settling into bed…':'Trying to sleep…';$('rest-description').textContent=protectedSleep?(world.flags.quiet?'The bell is silent.':'Your level 2 bedroom keeps the ringing outside.')+(restHandled?' Energy restored. He will wake automatically.':` Waking in ${Math.max(0,Math.ceil(controls.preferences.napDuration-(world.player.restElapsed||0)))} seconds.`):'The bell is still ringing outside. Silence it or upgrade home to level 2 to sleep through it.';
  $('nap').textContent=world.player.sleeping?'Wake up':'Nap on the grass';
@@ -199,7 +210,7 @@ function save(){try{const serialized=JSON.stringify(world.serialize());if(serial
 window.addEventListener('storage',event=>{if(event.key!==storageKey||!event.newValue||event.newValue===lastSaved)return;try{const incoming=JSON.parse(event.newValue);if(incoming.version!==VERSION)return;const next=new OpenWorld(incoming.seed,incoming);stopAI();keys.clear();world=next;$('goal').value=world.ambition;lastSaved=event.newValue;selected=null;buildMode=null;breadcrumbs=[[world.player.x,world.player.y]];camera={x:world.player.x*TILE,y:world.player.y*TILE};announce('Woodland updated from your other tab.');updateUI();}catch{}});
 function available(){
  return projectActions(world).map(option=>({...option,action:()=>{
-  if(option.kind==='blocked'){stopAI();result({ok:false,text:option.text});}
+  if(option.kind==='blocked'){stopAI('blocked',option.text);result({ok:false,text:option.text});}
   else if(['build','train','buy','plant','repair','dismantle','move','clear','dismiss','goose'].includes(option.kind)){queueAction(option.intent,option.kind==='train'?2:1,()=>applyTaskAction(world,option),null,option.kind==='clear'?'chop':option.kind==='buy'?'coin':'build');}
   else if(option.kind==='eat')result(applyTaskAction(world,option));
   else if(option.kind==='rest')result(world.nap());
@@ -208,20 +219,20 @@ function available(){
   else if(option.kind==='upgrade')queueAction(`Upgrading home to level ${world.settlement.level+1}…`,2,()=>world.upgradeHome());
   else if(option.kind==='raid')result(world.startRaid());
   else if(option.kind==='defend')result(world.whistle());
-  else if(option.kind==='finish'){stopAI();announce(TASK_KINDS.has(world.project?.kind)?`Goal complete. ${taskSummary(world,world.project)}.`:`Laya stopped. Home level ${world.settlement.level}, ${world.inventory.coins} coins, ${world.visited.size} places explored.`);save();}
+  else if(option.kind==='finish'){stopAI('complete');announce(TASK_KINDS.has(world.project?.kind)?`Goal complete. ${taskSummary(world,world.project)}.`:`Laya stopped. Home level ${world.settlement.level}, ${world.inventory.coins} coins, ${world.visited.size} places explored.`);save();}
   else if(option.kind==='explore')announce(`Explored ${world.visited.size} places. Keeping energy for the trip home.`);
   else performInteraction(...option.target,option.action,option);
  }}));
 }
 async function decide(){
  if(!modelReady){stopAI();announce('Laya is not ready yet. You can keep exploring manually.');return;}
- thinking=true;const generation=aiGeneration;$('ai-choice').textContent=world.project?'Laya is choosing the next action…':'Laya is identifying the main project in your goal…';
+ thinking=true;decisionStarted=time;decisionController=new AbortController();const signal=decisionController.signal;const started=Date.now();const waiting=setInterval(()=>{$('ai-choice').textContent=`Waiting for Laya · ${Math.floor((Date.now()-started)/1000)}s. Take control to cancel.`;},1000);const generation=aiGeneration;$('ai-choice').textContent=world.project?'Laya is choosing the next action…':'Laya is identifying the main project in your goal…';
  try{
-  if(!world.project||world.project.schema!==PROJECT_SCHEMA){const project=await interpretGoal($('goal').value.trim(),'',world);if(!autoplay||generation!==aiGeneration)return;world.project=project;save();}
-  const options=available();$('ai-choice').title=options.map(o=>`${o.id}: ${o.intent}`).join('\n');const answer=await askLaya($('goal').value.trim(),options);
+  if(!world.project||world.project.schema!==PROJECT_SCHEMA){const project=await interpretGoal($('goal').value.trim(),'',world,signal);if(!autoplay||generation!==aiGeneration)return;world.project=project;save();}
+  const options=available();$('ai-choice').title=options.map(o=>`${o.id}: ${o.intent}`).join('\n');const answer=options.length===1&&['finish','blocked'].includes(options[0].kind)?{choice:options[0].id,elapsed_ms:0}:await askLaya($('goal').value.trim(),options,'',signal);
   if(!autoplay||generation!==aiGeneration)return;const chosen=options.find(o=>o.id===answer.choice);if(!chosen)throw Error('Laya returned an unavailable action.');$('ai-choice').textContent=`Laya chose ${chosen.id} · ${answer.elapsed_ms} ms · ${modelHosted?'online':'local'} model`;
   activePlan=chosen;if(chosen.target){selected={x:chosen.target[0],y:chosen.target[1]};walkTo(...chosen.target,chosen.action);}else chosen.action();autoAt=time+2;
- }catch(error){if(generation!==aiGeneration)return;if(error.status===409){autoAt=time+2;$('ai-choice').textContent='Laya is finishing another decision. Retrying shortly…';return;}stopAI();$('ai-choice').textContent=error.message;announce('Automatic play paused. The woods are still yours.');}finally{if(generation===aiGeneration)thinking=false;}
+ }catch(error){if(generation!==aiGeneration)return;if(error.status===409){autoAt=time+2;$('ai-choice').textContent='Laya is finishing another decision. Retrying shortly…';return;}stopAI('error',error.message);$('ai-choice').textContent=error.message;announce('Automatic play paused. The woods are still yours.');}finally{clearInterval(waiting);if(generation===aiGeneration){thinking=false;decisionController=null;}}
 }
 let mapPointer=null;
 viewport.addEventListener('pointerdown',event=>{if(event.target.closest('button,input,select,.interaction-panel,.home-scene')||world.player.shelter)return;mapPointer={id:event.pointerId,x:event.clientX,y:event.clientY,focus:editFocus&&[...editFocus]};viewport.setPointerCapture(event.pointerId);});
@@ -245,7 +256,8 @@ function audioLabels(){$('mute-all').textContent=gameAudio.muted?'Unmute':'Mute'
 function unlockAudio(){gameAudio.unlock().then(()=>{$('sound-toggle').title=`${gameAudio.buffers.size} ElevenLabs recordings loaded`;$('viewport').dataset.audioLoaded=String(gameAudio.buffers.size);}).catch(()=>{});}
 document.addEventListener('pointerdown',unlockAudio,{once:true,capture:true});document.addEventListener('keydown',unlockAudio,{once:true,capture:true});
 $('mute-all').addEventListener('click',()=>{gameAudio.muted=!gameAudio.muted;gameAudio.update();audioLabels();});$('sound-toggle').addEventListener('click',()=>{gameAudio.effects=!gameAudio.effects;gameAudio.update();audioLabels();});$('ambience-toggle').addEventListener('click',()=>{gameAudio.ambience=!gameAudio.ambience;gameAudio.update();audioLabels();});audioLabels();
-$('autoplay').addEventListener('click',()=>{if(autoplay){stopAI();save();return;}aiGeneration++;thinking=false;buildMode=null;placement=null;autoplay=true;world.autorun=true;world.ambition=$('goal').value.trim();$('autoplay').textContent='Take control';autoAt=time;save();});$('save').addEventListener('click',()=>{save();announce('This woodland and everything you changed are saved on this device.');});
+$('activity-control').addEventListener('click',()=>{if(autoplay){stopAI();save();updateUI();}else controls.setPage('laya');});
+$('autoplay').addEventListener('click',()=>{if(autoplay){stopAI();save();return;}aiGeneration++;thinking=false;buildMode=null;placement=null;autoplay=true;world.autorun=true;runState='running';runDetail='';if(world.project){world.project.runState='running';world.project.runDetail='';}world.ambition=$('goal').value.trim();$('autoplay').textContent='Take control';autoAt=time;save();});$('save').addEventListener('click',()=>{save();announce('This woodland and everything you changed are saved on this device.');});
 $('goal').addEventListener('input',()=>{stopAI();world.project=null;world.ambition=$('goal').value.trim();save();});
 document.querySelectorAll('[data-goal]').forEach(b=>b.addEventListener('click',()=>{stopAI();world.project=null;world.ambition=b.dataset.goal;$('goal').value=world.ambition;announce('Goal changed. Start Laya when you are ready.');save();updateUI();}));
 $('dismiss-bees').addEventListener('click',()=>{world.flags.escort=false;result({ok:true,text:'Shift escort dismissed. The bees fly back to the apiary.'});});

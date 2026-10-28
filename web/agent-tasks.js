@@ -3,7 +3,7 @@ import {GOODS,STRUCTURE_PRICES} from './village-services.js';
 import {upgradeCost} from './settlement.js';
 import {findPath,WALK_COST} from './open-world-model.js';
 
-export const TASK_KINDS=new Set(['clear','earn','build','recruit','craft','gather','shop','plant','repair','move','dismantle','raid','eat','quit','dismiss','interact','goose']);
+export const TASK_KINDS=new Set(['bridge','clear','earn','build','recruit','craft','gather','shop','plant','repair','move','dismantle','raid','eat','quit','dismiss','interact','goose']);
 export function activateProject(world,project){
  if(project.started)return project;
  project.started=true;project.initialCoins=world.inventory.coins;project.earnedCoins=0;project.initialWins=world.settlement.wins;
@@ -15,6 +15,7 @@ function built(world,kind){return [...world.changes].filter(([,t])=>t.object?.bu
 function damaged(world,kind){return built(world,kind).filter(o=>BUILDINGS[o.kind]?.hp&&(o.hp??BUILDINGS[o.kind].hp)<BUILDINGS[o.kind].hp);}
 export function taskProgress(world,p){
  const amount=p.amount||1;
+ if(p.kind==='bridge')return {value:world.flags.bridge?1:0,total:1,label:'Repair river crossing'};
  if(p.kind==='earn')return {value:p.earnedCoins||0,total:p.targetCoins||10,label:'Coins earned'};
  if(p.kind==='build')return {value:buildingCount(world,p.building)-(p.initialCount||0),total:amount,label:`Build ${BUILDINGS[p.building]?.name||p.building}`};
  if(p.kind==='recruit')return {value:world.troops.filter(u=>u.type===p.troop).length-(p.initialCount||0),total:amount,label:`Train ${TROOPS[p.troop]?.name||p.troop}`};
@@ -87,7 +88,8 @@ export function taskActions(world,p){
   if(materials(payment==='coins'?{coins:STRUCTURE_PRICES[kind]}:spec.cost))siteActions(kind,payment);
  }
  support();
- if(p.kind==='earn')income();
+ if(p.kind==='bridge'){if(materials({wood:4,stone:2})&&safe(world.location('project')))add('repair_bridge','Use 4 wood and 2 stone to repair the river crossing.',world.location('project'));}
+ else if(p.kind==='earn')income();
  else if(p.kind==='gather')gather(p.resource,(p.initialAmount||0)+(p.amount||1));
  else if(p.kind==='build')build(p.building,p.payment||'materials');
  else if(p.kind==='recruit'){

@@ -1,6 +1,6 @@
 // Generated ElevenLabs recordings with local procedural effects as a fallback.
 export class GameAudio{
- constructor(){this.context=null;this.muted=false;this.effects=true;this.ambience=true;this.buffers=new Map();this.assets={};this.inside=false;this.combat=false;this.voices=new Set();this.lastPlayed=new Map();try{const settings=JSON.parse(localStorage.getItem('napquest-audio-settings')||'{}');this.muted=settings.muted===true;if(typeof settings.effects==='boolean')this.effects=settings.effects;if(typeof settings.ambience==='boolean')this.ambience=settings.ambience;}catch{}}
+ constructor(){this.context=null;this.muted=true;this.effects=true;this.ambience=true;this.buffers=new Map();this.assets={};this.inside=false;this.combat=false;this.voices=new Set();this.lastPlayed=new Map();try{const settings=JSON.parse(localStorage.getItem('napquest-audio-settings')||'{}');if(typeof settings.effects==='boolean')this.effects=settings.effects;if(typeof settings.ambience==='boolean')this.ambience=settings.ambience;}catch{}}
  async unlock(){
   if(this.context){if(this.context.state==='suspended')await this.context.resume();return;}
   const c=this.context=new AudioContext();this.fx=c.createGain();this.bed=c.createGain();const compressor=c.createDynamicsCompressor();compressor.threshold.value=-15;compressor.ratio.value=6;compressor.attack.value=.003;compressor.release.value=.12;compressor.connect(c.destination);this.fx.connect(compressor);this.bed.connect(compressor);this.update();

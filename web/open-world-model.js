@@ -75,7 +75,7 @@ export class OpenWorld {
     if(action==='nap'&&this.flags.job){this.flags.manager=true;this.flags.escort=false;this.player.energy=100;text='You sleep through 94 slides. Promoted. The bees return to their desks.';pose='nap';break;}
     if(!this.flags.job){this.flags.job=true;this.flags.escort=true;inv.honey+=2;text='Honey job accepted: +2 honey. Three coworkers join this shift. Work once or go home to end the escort.';break;}
     this.earnCoins(1);this.flags.escort=false;text='Honey advertisement done: +1 coin. Shift over. Your coworkers head back to the apiary.';pose='work';break;
-   case 'hive':inv.honey++;this.flags.job=true;this.flags.escort=true;text='Honey collected: +1 honey. Coworkers join your first shift; going home ends the escort.';break;
+   case 'hive':inv.honey++;if(!this.flags.job)this.flags.escort=true;this.flags.job=true;text='Honey collected: +1 honey. Coworkers only escort your first shift, then return to the apiary.';break;
    case 'market':
     if(action==='berry'){if(inv.coins<1)return {ok:false,text:'One berry costs 1 coin.'};inv.coins--;inv.berries++;text='Berry bought: -1 coin, +1 berry. Eat it for 25 energy.';}
     else if(action==='sell'){if(inv.berries<2)return {ok:false,text:'Kevin buys two berries for one coin.'};inv.berries-=2;this.earnCoins(1);text='Two berries sold. Kevin calls this a vertically integrated lunch.';}
@@ -96,7 +96,7 @@ export class OpenWorld {
  }
  craft(name){const cost=recipes[name];if(!cost||!this.canAfford(cost))return {ok:false,text:name==='muffler'?'The muffler needs 2 fiber and 1 honey.':'A picnic needs 2 berries and 1 food.'};
   const nearBench=this.objectsNear(this.player.x,this.player.y,2).some(o=>o.kind==='bench');if(!nearBench)return {ok:false,text:'Use a nearby workbench. Improvisation has already injured the picnic.'};
-  this.pay(cost);this.inventory[name]++;this.turn++;return {ok:true,text:this.note(name==='muffler'?'Bell muffler crafted. Finally, a quiet technology.':'A picnic packed. The future is edible.'),pose:'work'};
+  this.pay(cost);this.inventory[name]++;if(name==='muffler')this.flags.escort=false;this.turn++;return {ok:true,text:this.note(name==='muffler'?'Bell muffler crafted. Finally, a quiet technology.':'A picnic packed. The future is edible.'),pose:'work'};
  }
  build(kind,x,y,{payment='materials'}={}){const placement=placementPermission(this,kind,x,y,{payment});if(!placement.ok)return placement;const cost=payment==='coins'?{coins:STRUCTURE_PRICES[kind]}:buildings[kind];
   this.pay(cost);this.change(x,y,kind==='path'?null:{kind,id:key(x,y),built:true,paid:{...cost},hp:BUILDINGS[kind].hp,maxHp:BUILDINGS[kind].hp,stock:0,productionClock:0},kind==='path'?'path':undefined);this.turn++;return {ok:true,text:this.note(kind==='path'?'One less muddy footstep.':`A ${BUILDINGS[kind].name.toLowerCase()} built. This clearing has plans.`),pose:'work'};
@@ -113,7 +113,13 @@ export class OpenWorld {
  objectsNear(x,y,r=12){const out=[];for(let ty=Math.floor(y-r);ty<=Math.ceil(y+r);ty++)for(let tx=Math.floor(x-r);tx<=Math.ceil(x+r);tx++){const t=this.tile(tx,ty);if(t.object)out.push({...t.object,x:tx,y:ty});}return out;}
  recordTravel(distance){this.travelled+=distance;this.visited.add(key(Math.floor(this.player.x/4),Math.floor(this.player.y/4)));}
  trainTroop(type){return trainTroop(this,type);}
- tickVillage(dt){return tickVillage(this,dt);}
+ tickVillage(dt){
+  if(this.flags.escort){
+   this.escortElapsed=(this.escortElapsed||0)+dt;
+   if(this.escortElapsed>=30||this.flags.quiet||this.player.shelter){this.flags.escort=false;this.escortElapsed=0;}
+  }else this.escortElapsed=0;
+  return tickVillage(this,dt);
+ }
  repair(x,y){const o=this.tile(x,y).object,b=BUILDINGS[o?.kind];if(!b?.hp||!o.built||!this.near(x,y,2.5))return {ok:false,text:'Select a nearby player-built structure to repair.'};const max=b.hp;if((o.hp??max)>=max)return {ok:false,text:'This structure is already intact.'};const cost={wood:1,stone:1};if(!this.canAfford(cost))return {ok:false,text:'Repair needs 1 wood + 1 stone.'};this.pay(cost);this.change(x,y,{...o,hp:max,maxHp:max});return {ok:true,text:this.note(`${b.name} repaired to ${max} durability.`),sound:'build'};}
  dismantle(x,y){const o=this.tile(x,y).object,b=BUILDINGS[o?.kind];if(!o?.built||!b||!this.near(x,y,2.5))return {ok:false,text:'Select a nearby player-built structure first.'};if(o.kind==='barracks'&&this.troops.length)return {ok:false,text:'Your defenders still use this barracks.'};this.change(x,y,null);if(b.production)this.inventory[b.production.resource]+=o.stock||0;for(const [k,n] of Object.entries(o.paid||b.cost))this.inventory[k]+=Math.floor(n/2);return {ok:true,text:this.note(`${b.name} dismantled. Half the building materials returned, rounded down.`),sound:'cloth'};}
  upgradeHome(){return upgradeHome(this);}startRaid(){return startRaid(this);}whistle(){return whistle(this);}tickRaid(dt){return tickRaid(this,dt);}
